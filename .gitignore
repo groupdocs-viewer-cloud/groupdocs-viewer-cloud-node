@@ -1,0 +1,8 @@
+# node.js
+wwwroot/*.js
+node_modules
+typings
+lib
+
+# vs code
+.vscode

@@ -1,0 +1,49 @@
+{
+  "name": "groupdocs-viewer-cloud",
+  "version": "18.7.0",
+  "description": "GroupDocs.Viewer Cloud SDK for Node.js",
+  "homepage": "https://products.groupdocs.cloud/viewer",
+  "author": {
+    "name": "GroupDocs"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=4.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/groupdocs-viewer-cloud/groupdocs-viewer-cloud-node"
+  },
+  "keywords": [
+    "GroupDocs",
+    "Cloud",
+    "Viewer"
+  ],
+  "readmeFilename": "README.md",
+  "main": "lib/viewer_api.js",
+  "types": "lib/viewer_api.d.ts",
+  "scripts": {
+    "clean": "rimraf ./lib && rimraf ./node_modules",
+    "lint": "npm install --no-save && tslint src/{,**/}*.ts test/{,**/}*.ts -t verbose --project ./tsconfig.json",
+    "test": "npm install --no-save && mocha -r ts-node/register test/**/*.ts --timeout 60000 --reporter spec",
+    "build:dev": "rimraf ./lib && npm install --no-save && tsc --build ./tsconfig-dev.json",
+    "build:lib": "rimraf ./lib && npm install --no-save && tsc --build ./tsconfig.json",
+    "build:package": "npm pack"
+  },
+  "dependencies": {
+    "request": "^2.81.0",
+    "request-debug": "^0.2.0",
+    "@types/request": "*"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.10",
+    "@types/mocha": "^2.2.44",
+    "@types/node": "^10.10.1",
+    "asposestoragecloud": "^1.0.5",
+    "mocha": "^4.0.1",
+    "chai": "^4.1.2",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.8.0",
+    "typescript": "^3.0.3"
+  }
+}
