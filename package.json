@@ -1,6 +1,6 @@
 {
   "name": "groupdocs-viewer-cloud",
-  "version": "18.7.0",
+  "version": "18.11.0",
   "description": "GroupDocs.Viewer Cloud SDK for Node.js",
   "homepage": "https://products.groupdocs.cloud/viewer",
   "author": {
@@ -26,6 +26,7 @@
     "clean": "rimraf ./lib && rimraf ./node_modules",
     "lint": "npm install --no-save && tslint src/{,**/}*.ts test/{,**/}*.ts -t verbose --project ./tsconfig.json",
     "test": "npm install --no-save && mocha -r ts-node/register test/**/*.ts --timeout 60000 --reporter spec",
+    "test_debug": "npm install --no-save && mocha -r ts-node/register test/**/*.ts --timeout 60000 --reporter spec --nolazy --inspect-brk=9229",    
     "build:dev": "rimraf ./lib && npm install --no-save && tsc --build ./tsconfig-dev.json",
     "build:lib": "rimraf ./lib && npm install --no-save && tsc --build ./tsconfig.json",
     "build:package": "npm pack"

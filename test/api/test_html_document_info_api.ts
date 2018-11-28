@@ -31,7 +31,8 @@ import { DocumentInfoOptions,
          HtmlGetDocumentInfoFromUrlWithOptionsRequest,
          HtmlGetDocumentInfoRequest,
          HtmlGetDocumentInfoWithOptionsRequest, 
-         SlidesOptions } from "../../src/model";
+         SlidesOptions, 
+         ProjectOptions} from "../../src/model";
 
 import * as TestContext from "../test_context";
 import { TestFile } from "../test_file";
@@ -223,4 +224,32 @@ describe("html_document_info_api", () => {
         });
     });
 
+    describe("test_html_get_document_info_with_project_options", () => {
+        it("should return document information with project options", () => {
+            const file = TestFile.ProjectMpp;
+
+            const projectOptions = new ProjectOptions();
+            projectOptions.pageSize = "Unknown";
+            projectOptions.timeUnit = "Months";
+            projectOptions.startDate = new Date("2008/07/01");
+            projectOptions.endDate = new Date("2008/07/31");
+
+            const documentInfoOptions = new DocumentInfoOptions();
+            documentInfoOptions.projectOptions = projectOptions;
+
+            const request = new HtmlGetDocumentInfoWithOptionsRequest(file.fileName);
+            request.folder = file.folder;
+            request.documentInfoOptions = documentInfoOptions;
+
+            const viewerApi = TestContext.getViewerApi();
+            return viewerApi.htmlGetDocumentInfoWithOptions(request)
+                .then((result) => {
+                    expect(result.pages.length).equal(2);
+                    expect(result.extension).equal(".mpp");
+                    expect(result.fileName).equal(file.fileName);
+                    expect(result.startDate.getTime()).equal(Date.parse("2008/06/01"));
+                    expect(result.endDate.getTime()).equal(Date.parse("2008/09/03")); 
+                });
+        });
+    });    
 });

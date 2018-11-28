@@ -60,7 +60,7 @@ export class Serializer {
             }
             return transformedData;
         } else if (type === "Date") {
-            return data.toString();
+            return data.toISOString();
         } else {
             if (enumsMap[type]) {
                 return data;
@@ -104,7 +104,7 @@ export class Serializer {
             }
             return transformedData;
         } else if (type === "Date") {
-            return new Date(data);
+            return new Date(Date.parse(data));
         } else {
             if (enumsMap[type]) {// is Enum
                 return data;

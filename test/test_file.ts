@@ -98,6 +98,36 @@ export class TestFile {
         new TestFile("uses-custom-font.pptx", "slides\\pptx");
 
     /**
+     * MPP
+     */
+    public static ProjectMpp: TestFile =
+        new TestFile("sample.mpp", "project\\mpp");
+
+    /**
+     * PST
+     */
+    public static OutlookPst: TestFile =
+        new TestFile("sample.pst", "email\\outlook");
+
+    /**
+     * CGM
+     */
+    public static ImageCgm: TestFile =
+        new TestFile("nasa.cgm", "image");
+
+    /**
+     * PS
+     */
+    public static PrintPs: TestFile =
+        new TestFile("sample.ps", "print");
+
+    /**
+     * PCL
+     */
+    public static PrintPcl: TestFile =
+        new TestFile("print.pcl", "print");
+
+    /**
      * File name
      */
     public fileName: string;
@@ -134,5 +164,18 @@ export class TestFile {
         this.url = url;
         this.attachmentName = attachmentName;
         this.attachmentPassword = attachmentPassword;
+    }
+
+    public static Supported() {
+        return [
+            TestFile.WithAttachmentMsg,
+            TestFile.WithAttachmentPdf,
+            TestFile.TwoHiddenPagesVsd,
+            TestFile.ProjectMpp,
+            TestFile.OutlookPst,
+            TestFile.ImageCgm,
+            TestFile.PrintPs,
+            TestFile.PrintPcl
+        ];
     }
 }

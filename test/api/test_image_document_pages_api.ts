@@ -257,5 +257,28 @@ describe("image_get_document_page_api", () => {
                     });
         });
     });
+
+    describe("test_image_create_documents_pages_cache", () => {
+        it("should create document pages cache for file formats", () => { 
+            
+            return Promise.all(TestFile.Supported().map((file) => {
+                const imageOptions = new ImageOptions();
+                imageOptions.format = "jpg";
+
+                const request = new ImageCreatePagesCacheRequest(file.fileName);
+                request.folder = file.folder;
+                request.imageOptions = imageOptions;
+            
+                const viewerApi = TestContext.getViewerApi();                
+                return viewerApi.imageCreatePagesCache(request)
+                                .then((result) => {
+                                    expect(result.pages.length).to.be.greaterThan(0);
+                                    expect(result.fileName).to.be.equal(file.fileName); 
+                                    expect(result.folder).to.be.equal(file.folder);                           
+                                });
+            }));
+        });
+  
+    });    
     
 });

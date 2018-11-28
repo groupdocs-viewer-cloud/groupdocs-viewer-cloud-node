@@ -36,7 +36,9 @@ import { HtmlCreatePagesCacheFromContentRequest,
          HtmlOptions,
          HtmlTransformPagesRequest,
          ReorderOptions, 
-         RotateOptions } from "../../src/model";
+         RotateOptions, 
+         ProjectOptions,
+         OutlookOptions} from "../../src/model";
 
 import * as TestContext from "../test_context";
 import { TestFile } from "../test_file";
@@ -242,5 +244,54 @@ describe("html_get_document_page_api", () => {
                     });
         });
     });
-    
+
+    describe("test_html_create_document_pages_cache_w_opts", () => {
+        it("should create document pages cache with project options", () => {  
+            const file = TestFile.ProjectMpp;
+           
+            const projectOptions = new ProjectOptions();
+            projectOptions.timeUnit = "Days";
+            projectOptions.startDate = new Date("2008/07/01");
+            projectOptions.endDate = new Date("2008/07/31");
+
+            const htmlOptions = new HtmlOptions();
+            htmlOptions.embedResources = true;
+            htmlOptions.projectOptions = projectOptions;
+
+            const request = new HtmlCreatePagesCacheRequest(file.fileName);
+            request.folder = file.folder;
+            request.htmlOptions = htmlOptions;
+          
+            const viewerApi = TestContext.getViewerApi();
+            return viewerApi.htmlCreatePagesCache(request)
+                    .then((result) => {
+                        expect(result.pages.length).to.be.equal(1);
+                        expect(result.fileName).to.be.equal(file.fileName);
+                        expect(result.folder).to.be.equal(file.folder);
+                    });
+        });    
+
+        it("should create document pages cache with outlook options", () => {  
+            const file = TestFile.OutlookPst;
+           
+            const outlookOptions = new OutlookOptions();
+            outlookOptions.maxItemsInFolder = 5;
+
+            const htmlOptions = new HtmlOptions();
+            htmlOptions.embedResources = true;
+            htmlOptions.outlookOptions = outlookOptions;
+
+            const request = new HtmlCreatePagesCacheRequest(file.fileName);
+            request.folder = file.folder;
+            request.htmlOptions = htmlOptions;
+          
+            const viewerApi = TestContext.getViewerApi();
+            return viewerApi.htmlCreatePagesCache(request)
+                    .then((result) => {
+                        expect(result.pages.length).to.be.greaterThan(0);
+                        expect(result.fileName).to.be.equal(file.fileName);
+                        expect(result.folder).to.be.equal(file.folder);
+                    });
+        });         
+    });  
 });

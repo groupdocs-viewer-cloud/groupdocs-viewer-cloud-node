@@ -129,7 +129,7 @@ export class AttachmentInfo {
 }
 
 /**
- * The CAD documents rendering options.
+ * The CAD documents rendering options. Rendering of CAD file formats is not supported at the moment.
  */
 export class CadOptions {
 
@@ -392,6 +392,16 @@ export class DocumentInfo {
             name: "layers",
             baseName: "layers",
             type: "Array<string>",
+        },        
+        {
+            name: "startDate",
+            baseName: "startDate",
+            type: "Date",
+        },        
+        {
+            name: "endDate",
+            baseName: "endDate",
+            type: "Date",
         }    ];
 
     /**
@@ -440,6 +450,16 @@ export class DocumentInfo {
      * The list of layers contained in a CAD document.
      */
     public layers: Array<string>;
+    
+    /**
+     * For MS Project documents, The date time from which the project started.
+     */
+    public startDate: Date;
+    
+    /**
+     * For MS Project documents, the date time when the project is to be completed.
+     */
+    public endDate: Date;
     
     public constructor(init?: Partial<DocumentInfo>) {
         
@@ -889,6 +909,39 @@ export class ImageAttachmentPageCollection {
 }
 
 /**
+ * The Outlook data files rendering options.
+ */
+export class OutlookOptions {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "maxItemsInFolder",
+            baseName: "maxItemsInFolder",
+            type: "number",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return OutlookOptions.attributeTypeMap;
+    }
+
+    /**
+     * The limit of items to render in mailbox folders
+     */
+    public maxItemsInFolder: number;
+    
+    public constructor(init?: Partial<OutlookOptions>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
  * Page information.
  */
 export class PageInfo {
@@ -1095,6 +1148,16 @@ export class ProjectOptions {
             name: "timeUnit",
             baseName: "timeUnit",
             type: "string",
+        },        
+        {
+            name: "startDate",
+            baseName: "startDate",
+            type: "Date",
+        },        
+        {
+            name: "endDate",
+            baseName: "endDate",
+            type: "Date",
         }    ];
 
     /**
@@ -1113,6 +1176,16 @@ export class ProjectOptions {
      * The time unit to use as minimal point. Supported values {Unknown|Days|ThirdsOfMonths|Months}: 1. Unknown - unknown, unspecified time scale. 2. Days - one day interval. 3. ThirdsOfMonths - one third of the month. 4. Months - one month interval.
      */
     public timeUnit: string;
+    
+    /**
+     * The start date of a Gantt Chart View to render.        
+     */
+    public startDate: Date;
+    
+    /**
+     * The end date of a Gantt Chart View to render.
+     */
+    public endDate: Date;
     
     public constructor(init?: Partial<ProjectOptions>) {
         
@@ -1203,6 +1276,11 @@ export class RenderOptionsBase {
             name: "projectOptions",
             baseName: "projectOptions",
             type: "ProjectOptions",
+        },        
+        {
+            name: "outlookOptions",
+            baseName: "outlookOptions",
+            type: "OutlookOptions",
         }    ];
 
     /**
@@ -1286,6 +1364,11 @@ export class RenderOptionsBase {
      * The Microsoft Project documents rendering options.
      */
     public projectOptions: ProjectOptions;
+    
+    /**
+     * The Outlook Data File document (PST/OST) rendering options.
+     */
+    public outlookOptions: OutlookOptions;
     
     public constructor(init?: Partial<RenderOptionsBase>) {
         
@@ -2107,6 +2190,11 @@ export class HtmlOptions extends RenderOptions {
             name: "excludeFonts",
             baseName: "excludeFonts",
             type: "boolean",
+        },        
+        {
+            name: "excludeFontsList",
+            baseName: "excludeFontsList",
+            type: "Array<string>",
         }    ];
 
     /**
@@ -2145,6 +2233,11 @@ export class HtmlOptions extends RenderOptions {
      * Prevents adding fonts to the output HTML document.  
      */
     public excludeFonts: boolean;
+    
+    /**
+     * The list of font names, that will be excluded from HTML.
+     */
+    public excludeFontsList: Array<string>;
     
     public constructor(init?: Partial<HtmlOptions>) {
         super(init);
@@ -2234,6 +2327,7 @@ const typeMap = {
             HtmlAttachmentPageCollection,
             HtmlPageCollection,
             ImageAttachmentPageCollection,
+            OutlookOptions,
             PageInfo,
             PageInfoCollection,
             PdfOptions,

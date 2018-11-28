@@ -25,34 +25,41 @@
 import { expect } from "chai";
 import "mocha";
 
+import { Configuration } from "../../src/configuration";
 import { ViewerApi } from "../../src/viewer_api";
 
 describe("auth_api", () => {
 
     describe("test_auth_error", () => {
         it("should throw when app sid not found", () => {    
+            const settings = require("../test_settings.json");
             const appSid = "test";
-            const appKey = "test";        
-            const viewerApi = ViewerApi.fromKeys(appSid, appKey);
+            const appKey = "test";
+          
+            const config = new Configuration(appSid, appKey);
+            config.apiBaseUrl = settings.ApiBaseUrl;
+
+            const viewerApi = ViewerApi.fromConfig(config);
 
             return viewerApi.getSupportedFileFormats()
                 .catch((error) => {
-                    expect(error.code).equal(400);
                     expect(error.message).equal("Client 'test' is not registered in the system.");
                 });
         });
 
         it("should throw when app key not found", () => {    
             const settings = require("../test_settings.json");
-
             const appSid = settings.AppSid;
-            const appKey = "test";        
-            const viewerApi = ViewerApi.fromKeys(appSid, appKey);
+            const appKey = "test";
+          
+            const config = new Configuration(appSid, appKey);
+            config.apiBaseUrl = settings.ApiBaseUrl;
+
+            const viewerApi = ViewerApi.fromConfig(config);
 
             return viewerApi.getSupportedFileFormats()
                 .catch((error) => {
-                    expect(error.code).equal(400);
-                    expect(error.message).equals("Client '" + settings.AppSid + "' is not registered in the system.");
+                    expect(error.message).equals("Client secret is invalid.");
                 });
         });
     });
