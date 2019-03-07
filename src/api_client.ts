@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2018 Aspose Pty Ltd
+* Copyright (c) 2003-2019 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,6 @@ import request = require("request");
 import requestDebug = require("request-debug");
 import { Configuration } from "./configuration";
 import { PackageVersion } from "./package_version";
-import { Serializer } from "./serializer";
 
 /**
  * Invoke api method
@@ -35,15 +34,7 @@ import { Serializer } from "./serializer";
  * @param skipAuth If enabled, auth is not applied to request
  */
 export async function invokeApiMethod(requestOptions: request.Options, config: Configuration, skipAuth?: boolean): Promise<request.RequestResponse> {
-    try {
         return await invokeApiMethodInternal(requestOptions, config, skipAuth);
-    } catch (e) {
-        if (e instanceof NeedRepeatException) {
-            return await invokeApiMethodInternal(requestOptions, config, skipAuth);
-        }
-
-        throw e;
-    }
 }
 
 /**
@@ -101,21 +92,16 @@ async function invokeApiMethodInternal(requestOptions: request.Options, config: 
             } else {
                 if (response.statusCode >= 200 && response.statusCode <= 299) {
                     resolve(response);
-                } else if (response.statusCode === 401 && !skipAuth) {
-                    await auth.handle401response(config);
-                    reject(new NeedRepeatException());
                 } else {
                     try {
                         let bodyContent = response.body;
                         if (bodyContent instanceof Buffer) {
                             bodyContent = JSON.parse(bodyContent.toString("utf8"));
                         }
-
-                        if (bodyContent.error_description) {
-                            reject({ message: bodyContent.error_description, code: response.statusCode });
-                        } else {
-                            const result = Serializer.deserialize(bodyContent, "ApiError");
-                            reject({ message: result.error.message, code: response.statusCode });
+                        if (bodyContent.error) {
+                            reject({ message: bodyContent.error, code: response.statusCode });
+                        } else if (bodyContent.Error) {
+                            reject({ message: bodyContent.Error.Message, code: response.statusCode });
                         }
                     } catch (error) {
                         reject({ message: "Error while parse server error: " + error });
@@ -125,8 +111,3 @@ async function invokeApiMethodInternal(requestOptions: request.Options, config: 
         });
     });
 }
-
-/**
- * Exception, indicating necessity of request repeat
- */
-class NeedRepeatException extends Error { }

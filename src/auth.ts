@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2018 Aspose Pty Ltd
+* Copyright (c) 2003-2019 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -35,10 +35,6 @@ export interface IAuthentication {
      */
     applyToRequest(requestOptions: request.Options, configuration: Configuration): void;
 
-    /**
-     * Handle 401 response.
-     */
-    handle401response(configuration: Configuration);
 }
 
 /**
@@ -46,7 +42,6 @@ export interface IAuthentication {
  */
 export class OAuth implements IAuthentication {
     private accessToken: string;
-    private refreshToken: string;
 
     /**
      * Apply authentication settings to header and query params
@@ -63,18 +58,11 @@ export class OAuth implements IAuthentication {
         return Promise.resolve();
     }
 
-    /**
-     * Handle 401 response.
-     */
-    public async handle401response(configuration: Configuration) {
-        await this._refreshToken(configuration);
-    }
-
     private async _requestToken(configuration: Configuration): Promise<void> {
         const requestOptions: request.Options = {
             method: "POST",
             json: true,
-            uri: configuration.apiBaseUrl + "/oauth2/token",
+            uri: configuration.apiBaseUrl + "/connect/token",
             form: {
                 grant_type: "client_credentials",
                 client_id: configuration.appSid,
@@ -83,25 +71,7 @@ export class OAuth implements IAuthentication {
         };
 
         const response = await invokeApiMethod(requestOptions, configuration, true);
-        this.accessToken = response.body.access_token;
-        this.refreshToken = response.body.refresh_token;
-        return Promise.resolve();
-    }
-
-    private async _refreshToken(configuration: Configuration): Promise<void> {
-        const requestOptions: request.Options = {
-            method: "POST",
-            json: true,
-            uri: configuration.apiBaseUrl + "/oauth2/token",
-            form: {
-                grant_type: "refresh_token",
-                refresh_token: this.refreshToken,
-            },
-        };
-
-        const response = await invokeApiMethod(requestOptions, configuration, true);
-        this.accessToken = response.body.access_token;
-        this.refreshToken = response.body.refresh_token;
+        this.accessToken = response.body.access_token;        
         return Promise.resolve();
     }
 }

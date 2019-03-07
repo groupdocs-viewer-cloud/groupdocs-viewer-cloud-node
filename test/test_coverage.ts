@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2018 Aspose Pty Ltd
+* Copyright (c) 2003-2019 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ describe("API method coverage", () => {
             let usageOfMethodFound = false;
             filesWithTests.forEach((file) => {
                 const fileContent = fs.readFileSync(file, "utf8");
-                if (fileContent.indexOf("viewerApi." + method) > 0) {
+                if (fileContent.indexOf("." + method) > 0) {
                     usageOfMethodFound = true;
                 }
             });

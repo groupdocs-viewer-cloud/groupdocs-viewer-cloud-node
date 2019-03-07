@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2018 Aspose Pty Ltd
+* Copyright (c) 2003-2019 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,111 +21,71 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 */
-
+import { FileInfo } from "../src/model";
 /**
  * Describes test file
  */
 export class TestFile {
 
     /**
-     * MSG file with attachment
-     */
-    public static WithAttachmentMsg: TestFile =
-        new TestFile(
-            "with-attachment.msg",
-            "email\\msg",
-            null,
-            null,
-            "password-protected.docx",
-            "password");
-
-    /**
-     * PDF file with attachment
-     */
-    public static WithAttachmentPdf: TestFile =
-        new TestFile(
-            "with-attachment.pdf",
-            "pdf\\pdf",
-            null,
-            null,
-            "password-protected.docx",
-            "password");
-
-    /**
-     * Corrupted PDF file
-     */
-    public static CorruptedPdf: TestFile =
-        new TestFile("corrupted.pdf", "pdf\\pdf");
-
-    /**
      * DOCX file with one page
      */
     public static OnePageDocx: TestFile =
-        new TestFile("one-page.docx", "words\\docx");
+        new TestFile("one-page.docx", "words\\docx\\");
+
     /**
-     * DOCX file with four pages
+     * DOCX file that should not exists in storage
      */
-    public static FourPagesDocx: TestFile =
-        new TestFile("four-pages.docx", "words\\docx");
-    /**
-     * VSD file with two hidden pages
-     */
-    public static TwoHiddenPagesVsd: TestFile =
-        new TestFile("two-hidden-pages.vsd", "diagram\\vsd");
+    public static NotExist: TestFile =
+        new TestFile("NotExist.docx", "some-folder\\");
     
     /**
      * Password-protected DOCX file
      */
     public static PasswordProtectedDocx: TestFile =
-        new TestFile("password-protected.docx", "words\\docx", "password");
+        new TestFile("password-protected.docx", "words\\docx\\", "password");
 
     /**
-     * DOCX with one page which located at DropBox storage
+     * VSD file with two hidden pages
      */
-    public static FromUrlOnePageDocx: TestFile =
-        new TestFile("one-page.docx", null, null, "https://www.dropbox.com/s/j260ve4f90h1p41/one-page.docx?dl=1");
+    public static TwoHiddenPagesVsd: TestFile =
+        new TestFile("two-hidden-pages.vsd", "diagram\\vsd\\");
 
     /**
-     * PPTX with one page which located at DropBox storage
+     * XLSX file with hidden rown and columns
      */
-    public static FromUrlWithNotesPptx: TestFile =
-        new TestFile("with-notes.pptx", null, null, "https://www.dropbox.com/s/r2eioe2atushqcf/with-notes.pptx?dl=1");
+    public static WithHiddenRowsAndColumns: TestFile =
+        new TestFile("with-hidden-rows-and-columns.xlsx", "cells\\xlsx\\");
 
     /**
-     * PPTX which uses custom font
+     * DWF file
      */
-    public static UsesCustomFontPptx: TestFile =
-        new TestFile("uses-custom-font.pptx", "slides\\pptx");
+    public static ThreeLayoutsDwf: TestFile =
+        new TestFile("three-layouts.dwf", "cad\\dwf\\");
 
     /**
      * MPP
      */
     public static ProjectMpp: TestFile =
-        new TestFile("sample.mpp", "project\\mpp");
+        new TestFile("sample.mpp", "project\\mpp\\");
 
     /**
-     * PST
+     * PPTX which uses custom font
      */
-    public static OutlookPst: TestFile =
-        new TestFile("sample.pst", "email\\outlook");
+    public static UsesCustomFontPptx: TestFile =
+        new TestFile("uses-custom-font.pptx", "slides\\pptx\\");
 
     /**
-     * CGM
+     * TTF font
      */
-    public static ImageCgm: TestFile =
-        new TestFile("nasa.cgm", "image");
+    public static FontTtf: TestFile =
+        new TestFile("foo.ttf", "font\\ttf\\");
 
     /**
-     * PS
+     * DOCX file with four pages
      */
-    public static PrintPs: TestFile =
-        new TestFile("sample.ps", "print");
-
-    /**
-     * PCL
-     */
-    public static PrintPcl: TestFile =
-        new TestFile("print.pcl", "print");
+    public static FourPagesDocx: TestFile =
+        new TestFile("four-pages.docx", "words\\docx\\");
 
     /**
      * File name
@@ -143,39 +103,45 @@ export class TestFile {
     public password: string;
 
     /**
-     * Location of remote file
+     * Returns test file path
      */
-    public url: string;
+    public GetPath() {
+        return this.folder + this.fileName;
+    }
 
     /**
-     * Attachment name
+     *  Returns FileInfo
      */
-    public attachmentName: string;
+    public ToFileInfo()
+    {
+        let fileInfo = new FileInfo();
+        fileInfo.filePath = this.GetPath();
+        fileInfo.password = this.password;
+        return fileInfo;
+    }
 
     /**
      * Attachment password
      */
     public attachmentPassword: string;
 
-    private constructor(fileName: string, folder: string, password?: string, url?: string, attachmentName?: string, attachmentPassword?: string) {
+    private constructor(fileName: string, folder: string, password?: string) {
         this.fileName = fileName;
         this.folder = folder;
         this.password = password;
-        this.url = url;
-        this.attachmentName = attachmentName;
-        this.attachmentPassword = attachmentPassword;
     }
 
-    public static Supported() {
+    public static GetTestFiles() {
         return [
-            TestFile.WithAttachmentMsg,
-            TestFile.WithAttachmentPdf,
+            TestFile.OnePageDocx,
+            TestFile.PasswordProtectedDocx,
             TestFile.TwoHiddenPagesVsd,
+            TestFile.WithHiddenRowsAndColumns,
+            TestFile.ThreeLayoutsDwf,
             TestFile.ProjectMpp,
-            TestFile.OutlookPst,
-            TestFile.ImageCgm,
-            TestFile.PrintPs,
-            TestFile.PrintPcl
+            TestFile.UsesCustomFontPptx,
+            TestFile.FontTtf,
+            TestFile.FourPagesDocx
         ];
     }
 }

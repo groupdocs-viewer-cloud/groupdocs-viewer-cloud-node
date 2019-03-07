@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2018 Aspose Pty Ltd
+* Copyright (c) 2003-2019 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -38,30 +38,14 @@ describe("auth_api", () => {
           
             const config = new Configuration(appSid, appKey);
             config.apiBaseUrl = settings.ApiBaseUrl;
-
             const viewerApi = ViewerApi.fromConfig(config);
 
             return viewerApi.getSupportedFileFormats()
                 .catch((error) => {
-                    expect(error.message).equal("Client 'test' is not registered in the system.");
+                    expect(error.message).equal("invalid_client");
                 });
         });
 
-        it("should throw when app key not found", () => {    
-            const settings = require("../test_settings.json");
-            const appSid = settings.AppSid;
-            const appKey = "test";
-          
-            const config = new Configuration(appSid, appKey);
-            config.apiBaseUrl = settings.ApiBaseUrl;
-
-            const viewerApi = ViewerApi.fromConfig(config);
-
-            return viewerApi.getSupportedFileFormats()
-                .catch((error) => {
-                    expect(error.message).equals("Client secret is invalid.");
-                });
-        });
     });
 
 });

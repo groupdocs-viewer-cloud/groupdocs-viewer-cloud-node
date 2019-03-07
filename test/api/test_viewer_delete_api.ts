@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2018 Aspose Pty Ltd
+* Copyright (c) 2003-2019 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -24,33 +24,36 @@
 
 import { expect } from "chai";
 import "mocha";
-
+import { CreateViewRequest, 
+    ViewOptions,
+    DeleteViewRequest,
+    DeleteViewOptions} from "../../src/model";
 import * as TestContext from "../test_context";
+import { TestFile } from "../test_file";
 
-describe("fonts_api", () => {
-
-    describe("test_delete_fonts_cache", () => {
-        it("should return response with code 204", () => {            
-            const viewerApi = TestContext.getViewerApi();
-
-            return viewerApi.deleteFontsCache()
-                .then((response) => {
-                    expect(response.statusCode).to.equal(204);
-                });
-        });
+describe("viewer_delete_api", () => {
+    
+    before(async () => {
+        process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = "0"
+        await TestContext.uploadTestFiles();
     });
 
-    describe("test_get_fonts", () => {
-        it("should return system fonts", () => {            
-            const viewerApi = TestContext.getViewerApi();
-
-            return viewerApi.getFonts()
-                .then((result) => {
-                    for (const family of result.families) {
-                        expect(family.name).to.not.equal("");
-                    }
-                });
-        });
+    afterEach(async function() {
+        await TestContext.cleanupTempFiles();
     });
 
+    describe("test_viewer_delete_api", () => {
+        it("TestDeleteViewWithDefaultViewFormat", async () => {            
+            const viewOptions = new ViewOptions();
+            viewOptions.fileInfo = TestFile.OnePageDocx.ToFileInfo();
+            const request = new CreateViewRequest(viewOptions);
+            var result = await TestContext.getViewerApi().createView(request);
+            expect(result.pages.length).equal(1);
+            const dvOptions = new DeleteViewOptions();
+            dvOptions.fileInfo = TestFile.OnePageDocx.ToFileInfo();
+            const delRequest = new DeleteViewRequest(dvOptions);
+            await TestContext.getViewerApi().deleteView(delRequest);
+        });
+    });
+    
 });

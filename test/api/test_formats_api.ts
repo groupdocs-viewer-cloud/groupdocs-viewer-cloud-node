@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2018 Aspose Pty Ltd
+* Copyright (c) 2003-2019 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -27,13 +27,22 @@ import "mocha";
 import * as TestContext from "../test_context";
 
 describe("formats_api", () => {
+    
+    before(async () => {
+        process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = "0"
+        await TestContext.uploadTestFiles();
+    });
+
+    afterEach(async function() {
+        await TestContext.cleanupTempFiles();
+    });
 
     describe("test_get_supported_file_formats", () => {
-        it("should return system fonts", () => {            
+        it("should return list of supported formats", () => {            
             const viewerApi = TestContext.getViewerApi();
 
             return viewerApi.getSupportedFileFormats()
-                .then((result) => {
+                .then((result) => {                   
                     for (const format of result.formats) {
                         expect(format.fileFormat).to.not.equal("");
                         expect(format.extension).to.not.equal("");

@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2018 Aspose Pty Ltd
+* Copyright (c) 2003-2019 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,7 @@ export class Configuration {
     /**
      * Gets or sets the API version
      */
-    public apiVersion: string = "/v1";
+    public apiVersion: string = "/v2.0";
 
     /**
      *  When enabled all requests and responses are logged to console
@@ -71,7 +71,7 @@ export class Configuration {
     }
 
     /**
-     * Returns server url e.g "https://api.groupdocs.cloud/v1"
+     * Returns server url e.g "https://api.groupdocs.cloud/2.0"
      */ 
     public getServerUrl(): string {
         return this.apiBaseUrl + this.apiVersion;

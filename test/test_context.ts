@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2018 Aspose Pty Ltd
+* Copyright (c) 2003-2019 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -22,16 +22,20 @@
 * SOFTWARE.
 */
 
-import StorageApi = require("asposestoragecloud");
 import * as fs from "fs";
 
 import { Configuration } from "../src/configuration";
 import { Serializer } from "../src/serializer";
-import { ViewerApi } from "../src/viewer_api";
+import { ViewerApi, ObjectExistsRequest, UploadFileRequest } from "../src/viewer_api";
+import { StorageApi } from "../src/viewer_api";
+import { FileApi } from "../src/viewer_api";
+import { FolderApi, DeleteFolderRequest } from "../src/viewer_api";
 import { TestFile } from "./test_file";
 
-let viewerApi;
-let storageApi;
+let viewerApi: ViewerApi;
+let storageApi: StorageApi;
+let fileApi: FileApi;
+let folderApi: FolderApi;
 
 /**
  * Initializes ViewerApi
@@ -42,43 +46,45 @@ export function getViewerApi() {
 
         const config = new Configuration(settings.AppSid, settings.AppKey);
         config.apiBaseUrl = settings.ApiBaseUrl;
-
+        //config.debugging = true;
         viewerApi = ViewerApi.fromConfig(config);
+        storageApi = StorageApi.fromConfig(config);
+        fileApi = FileApi.fromConfig(config);
+        folderApi = FolderApi.fromConfig(config);
     }
 
     return viewerApi;
 }
 
-/**
- * Initializes StorageApi
- */
 export function getStorageApi() {
-    if (!storageApi) {
-        const settings = require("./test_settings.json");
-        storageApi = new StorageApi({
-            appSid: settings.AppSid,
-            apiKey: settings.AppKey,
-            baseURI: settings.ApiBaseUrl + "/v1",
-        });
-    }
-
+    if (!viewerApi) getViewerApi();
     return storageApi;
+}
+
+export function getFileApi() {
+    if (!viewerApi) getViewerApi();
+    return fileApi;
+}
+
+export function getFolderApi() {
+    if (!viewerApi) getViewerApi();
+    return folderApi;
 }
 
 /**
  * Uploads test files
  */
-export function uploadTestFiles() {
-    const api = getStorageApi();
-    
-    const testFilesDir = __dirname + "\\test_files";
-    const testFiles = getFileList(testFilesDir, []);
-
+export function uploadTestFiles() {    
+    getViewerApi();    
+    const testFiles = TestFile.GetTestFiles();
     return Promise.all(testFiles.map((file) => {
-        const srcFilePath = file;
-        const dstFilePath = file.replace(testFilesDir + "/", "");
-
-        return uploadTestFile(api, srcFilePath, dstFilePath);
+        return storageApi.objectExists(new ObjectExistsRequest(file.GetPath())).then((response) => {
+            if(!response.exists) {
+                console.log("Uploading: " + file.GetPath());
+                let filebuf = getTestFileBuffer(file);
+                return fileApi.uploadFile(new UploadFileRequest(file.GetPath(), filebuf))
+            }            
+        });
     }));
 }
 
@@ -86,9 +92,9 @@ export function uploadTestFiles() {
  * Cleanups temp files
  */
 export function cleanupTempFiles() {
-    const api = getStorageApi();
+    const api = getFolderApi();
     
-    const tempDirs = ["test", "cache"];    
+    const tempDirs = ["viewer"];    
 
     return Promise.all(tempDirs.map((dir) => {
         return deleteTempDir(api, dir);
@@ -100,8 +106,7 @@ export function cleanupTempFiles() {
  */
 export function getTestFileBuffer(file: TestFile) {
     const testFilesDir = __dirname + "\\test_files";
-    const testFilePath = testFilesDir + "\\" + file.folder + "\\" + file.fileName;
-
+    const testFilePath = testFilesDir + "\\" + file.GetPath();
     return fs.readFileSync(testFilePath);
 }
 
@@ -114,43 +119,6 @@ export function serializeIntoBuffer(obj) {
     return new Buffer(json, "utf-8");
 }
 
-const getFileList = (dir, fileList) => {
-    const files = fs.readdirSync(dir);
-    fileList = fileList || [];
-    files.forEach((file) => {
-        if (fs.statSync(dir + "/" + file).isDirectory()) {
-            fileList = fileList.concat(getFileList(dir + "/" + file, []));
-        } else { fileList.push(dir + "/" + file); }
-    });
-    return fileList;
-};
-
-const uploadTestFile = (api, srcFilePath, dstFilePath) => {
-    return new Promise((resolve, reject) => {
-        api.GetIsExist(dstFilePath, null, null, (existResponse) => {
-            if (existResponse.body.fileExist.isExist === true) {
-                resolve();
-            } else {
-                api.PutCreate(dstFilePath, null, null, srcFilePath, (createResponse) => {
-                    if (createResponse.status === "OK") {
-                        resolve();
-                    } else {
-                        reject(createResponse.status);
-                    }
-                });
-            }
-        });
-    }).catch((err) => { throw err; });
-};
-
 const deleteTempDir = (api, dir) => {
-    return new Promise((resolve, reject) => {
-        api.DeleteFolder(dir, null, true, (response) => {
-            if (response.status === "OK") {
-                resolve();
-            } else {
-                reject(response.status);
-            }
-        });
-    }).catch((err) => { throw err; });
+    return api.deleteFolder(new DeleteFolderRequest(dir, undefined, true));
 };

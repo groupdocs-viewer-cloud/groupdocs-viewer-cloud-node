@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2018 Aspose Pty Ltd
+* Copyright (c) 2003-2019 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -75,7 +75,11 @@ export class Serializer {
             for (const index in attributeTypes) {
                 if (attributeTypes.hasOwnProperty(index)) {
                     const attributeType = attributeTypes[index];
-                    instance[attributeType.baseName] = Serializer.serialize(data[attributeType.name], attributeType.type);
+                    if (data[attributeType.name] instanceof Object) {
+                        instance[attributeType.baseName] = Serializer.serialize(data[attributeType.name], data[attributeType.name].constructor.name);
+                    } else {
+                        instance[attributeType.baseName] = Serializer.serialize(data[attributeType.name], attributeType.type);
+                    }
                 }
             }
             return instance;
