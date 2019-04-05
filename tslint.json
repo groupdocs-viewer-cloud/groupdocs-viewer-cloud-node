@@ -9,12 +9,6 @@
         "completed-docs": [
             true,
             {
-                "properties": {
-                    "privacies": [
-                        "public",
-                        "protected"
-                    ]
-                },
                 "methods": {
                     "privacies": [
                         "public",
@@ -23,8 +17,7 @@
                 },
                 "classes": true,
                 "functions": true,
-                "interfaces": true,
-                "namespaces": true,
+                "interfaces": true,                
                 "types": true
             }
         ],

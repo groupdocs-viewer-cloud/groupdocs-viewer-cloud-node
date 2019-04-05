@@ -72,7 +72,7 @@ export class FileApi {
      * Copy file
      * @param requestObj contains request parameters
      */
-    public async copyFile(requestObj: model.CopyFileRequest): Promise<http.ClientResponse> {
+    public async copyFile(requestObj: model.CopyFileRequest): Promise<http.IncomingMessage> {
         if (requestObj === null || requestObj === undefined) {
             throw new Error('Required parameter "requestObj" was null or undefined when calling copyFile.');
         }
@@ -110,7 +110,7 @@ export class FileApi {
      * Delete file
      * @param requestObj contains request parameters
      */
-    public async deleteFile(requestObj: model.DeleteFileRequest): Promise<http.ClientResponse> {
+    public async deleteFile(requestObj: model.DeleteFileRequest): Promise<http.IncomingMessage> {
         if (requestObj === null || requestObj === undefined) {
             throw new Error('Required parameter "requestObj" was null or undefined when calling deleteFile.');
         }
@@ -173,7 +173,7 @@ export class FileApi {
      * Move file
      * @param requestObj contains request parameters
      */
-    public async moveFile(requestObj: model.MoveFileRequest): Promise<http.ClientResponse> {
+    public async moveFile(requestObj: model.MoveFileRequest): Promise<http.IncomingMessage> {
         if (requestObj === null || requestObj === undefined) {
             throw new Error('Required parameter "requestObj" was null or undefined when calling moveFile.');
         }
@@ -294,7 +294,7 @@ export class FolderApi {
      * Copy folder
      * @param requestObj contains request parameters
      */
-    public async copyFolder(requestObj: model.CopyFolderRequest): Promise<http.ClientResponse> {
+    public async copyFolder(requestObj: model.CopyFolderRequest): Promise<http.IncomingMessage> {
         if (requestObj === null || requestObj === undefined) {
             throw new Error('Required parameter "requestObj" was null or undefined when calling copyFolder.');
         }
@@ -331,7 +331,7 @@ export class FolderApi {
      * Create the folder
      * @param requestObj contains request parameters
      */
-    public async createFolder(requestObj: model.CreateFolderRequest): Promise<http.ClientResponse> {
+    public async createFolder(requestObj: model.CreateFolderRequest): Promise<http.IncomingMessage> {
         if (requestObj === null || requestObj === undefined) {
             throw new Error('Required parameter "requestObj" was null or undefined when calling createFolder.');
         }
@@ -361,7 +361,7 @@ export class FolderApi {
      * Delete folder
      * @param requestObj contains request parameters
      */
-    public async deleteFolder(requestObj: model.DeleteFolderRequest): Promise<http.ClientResponse> {
+    public async deleteFolder(requestObj: model.DeleteFolderRequest): Promise<http.IncomingMessage> {
         if (requestObj === null || requestObj === undefined) {
             throw new Error('Required parameter "requestObj" was null or undefined when calling deleteFolder.');
         }
@@ -423,7 +423,7 @@ export class FolderApi {
      * Move folder
      * @param requestObj contains request parameters
      */
-    public async moveFolder(requestObj: model.MoveFolderRequest): Promise<http.ClientResponse> {
+    public async moveFolder(requestObj: model.MoveFolderRequest): Promise<http.IncomingMessage> {
         if (requestObj === null || requestObj === undefined) {
             throw new Error('Required parameter "requestObj" was null or undefined when calling moveFolder.');
         }
@@ -680,7 +680,7 @@ export class ViewerApi {
      * Delete view
      * @param requestObj contains request parameters
      */
-    public async deleteView(requestObj: model.DeleteViewRequest): Promise<http.ClientResponse> {
+    public async deleteView(requestObj: model.DeleteViewRequest): Promise<http.IncomingMessage> {
         if (requestObj === null || requestObj === undefined) {
             throw new Error('Required parameter "requestObj" was null or undefined when calling deleteView.');
         }

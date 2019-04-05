@@ -1599,6 +1599,11 @@ export class HtmlOptions extends RenderOptions {
             name: "resourcePath",
             baseName: "resourcePath",
             type: "string",
+        },        
+        {
+            name: "isResponsive",
+            baseName: "isResponsive",
+            type: "boolean",
         }    ];
 
     /**
@@ -1617,6 +1622,11 @@ export class HtmlOptions extends RenderOptions {
      * Path for the HTML resources (styles, images and fonts). For example when resource path is http://example.com/api/pages/{page-number}/resources/{resource-name} the {page-number} and {resource-name} templates will be replaced with page number and resource name accordingly. This option is ignored when ExternalResources option is disabled.
      */
     public resourcePath: string;
+    
+    /**
+     * Indicates whether rendering will provide responsive web pages, that look well on different device types. Default value is false.
+     */
+    public isResponsive: boolean;
     
     public constructor(init?: Partial<HtmlOptions>) {
         super(init);
