@@ -1324,6 +1324,11 @@ export class ViewOptions {
             type: "ViewOptions.ViewFormatEnum",
         },        
         {
+            name: "outputPath",
+            baseName: "outputPath",
+            type: "string",
+        },        
+        {
             name: "fontsPath",
             baseName: "fontsPath",
             type: "string",
@@ -1355,6 +1360,11 @@ export class ViewOptions {
      * View format (HTML, PNG, JPG, BMP or PDF) Default value is HTML.
      */
     public viewFormat: ViewOptions.ViewFormatEnum;
+    
+    /**
+     * The output path. Default value is 'viewer\\{input file path}_{file extension}\\'
+     */
+    public outputPath: string;
     
     /**
      * The path to directory containing custom fonts in storage

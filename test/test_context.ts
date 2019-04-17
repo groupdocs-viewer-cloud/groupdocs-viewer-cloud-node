@@ -36,6 +36,7 @@ let viewerApi: ViewerApi;
 let storageApi: StorageApi;
 let fileApi: FileApi;
 let folderApi: FolderApi;
+var uploaded: boolean = false;
 
 /**
  * Initializes ViewerApi
@@ -74,18 +75,19 @@ export function getFolderApi() {
 /**
  * Uploads test files
  */
-export function uploadTestFiles() {    
+export function uploadTestFiles() {
+    if(uploaded) return;
     getViewerApi();    
     const testFiles = TestFile.GetTestFiles();
-    return Promise.all(testFiles.map((file) => {
-        return storageApi.objectExists(new ObjectExistsRequest(file.GetPath())).then((response) => {
-            if(!response.exists) {
-                console.log("Uploading: " + file.GetPath());
-                let filebuf = getTestFileBuffer(file);
-                return fileApi.uploadFile(new UploadFileRequest(file.GetPath(), filebuf))
-            }            
-        });
-    }));
+    testFiles.forEach(async function (file) {
+        const response = await storageApi.objectExists(new ObjectExistsRequest(file.GetPath()));
+        if (!response.exists) {
+            console.log("Uploading: " + file.GetPath());
+            let filebuf = getTestFileBuffer(file);
+            await fileApi.uploadFile(new UploadFileRequest(file.GetPath(), filebuf));
+        }        
+    });
+    uploaded = true;
 }
 
 /**

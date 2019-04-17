@@ -647,7 +647,7 @@ export class ViewerApi {
     }
 
     /**
-     * Create new view if it not exists
+     * Render document pages
      * @param requestObj contains request parameters
      */
     public async createView(requestObj: model.CreateViewRequest): Promise<model.ViewResult> {
@@ -677,7 +677,7 @@ export class ViewerApi {
     }
 
     /**
-     * Delete view
+     * Delete rendered pages
      * @param requestObj contains request parameters
      */
     public async deleteView(requestObj: model.DeleteViewRequest): Promise<http.IncomingMessage> {
@@ -706,7 +706,7 @@ export class ViewerApi {
     }
 
     /**
-     * Get information about view
+     * Retrieve information about document pages
      * @param requestObj contains request parameters
      */
     public async getInfo(requestObj: model.GetInfoRequest): Promise<model.InfoResult> {
@@ -736,7 +736,7 @@ export class ViewerApi {
     }
 
     /**
-     * Get supported file formats
+     * List supported file formats
      * @param requestObj contains request parameters
      */
     public async getSupportedFileFormats(): Promise<model.FormatsResult> {
