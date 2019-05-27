@@ -26,49 +26,58 @@ import * as fs from "fs";
 
 import { Configuration } from "../src/configuration";
 import { Serializer } from "../src/serializer";
-import { ViewerApi, ObjectExistsRequest, UploadFileRequest } from "../src/viewer_api";
+import { InfoApi, ViewApi, ObjectExistsRequest, UploadFileRequest } from "../src/viewer_api";
 import { StorageApi } from "../src/viewer_api";
 import { FileApi } from "../src/viewer_api";
 import { FolderApi, DeleteFolderRequest } from "../src/viewer_api";
 import { TestFile } from "./test_file";
 
-let viewerApi: ViewerApi;
+let infoApi: InfoApi;
+let viewApi: ViewApi;
 let storageApi: StorageApi;
 let fileApi: FileApi;
 let folderApi: FolderApi;
 var uploaded: boolean = false;
 
+
 /**
  * Initializes ViewerApi
  */
 export function getViewerApi() {
-    if (!viewerApi) {
+    if (!viewApi) {
         const settings = require("./test_settings.json");
 
         const config = new Configuration(settings.AppSid, settings.AppKey);
         config.apiBaseUrl = settings.ApiBaseUrl;
         //config.debugging = true;
-        viewerApi = ViewerApi.fromConfig(config);
+        infoApi = InfoApi.fromConfig(config);
+        viewApi = ViewApi.fromConfig(config);
         storageApi = StorageApi.fromConfig(config);
         fileApi = FileApi.fromConfig(config);
         folderApi = FolderApi.fromConfig(config);
     }
 
-    return viewerApi;
+    return viewApi;
+}
+
+
+export function getInfoApi() {
+    if (!viewApi) getViewerApi();
+    return infoApi;
 }
 
 export function getStorageApi() {
-    if (!viewerApi) getViewerApi();
+    if (!viewApi) getViewerApi();
     return storageApi;
 }
 
 export function getFileApi() {
-    if (!viewerApi) getViewerApi();
+    if (!viewApi) getViewerApi();
     return fileApi;
 }
 
 export function getFolderApi() {
-    if (!viewerApi) getViewerApi();
+    if (!viewApi) getViewerApi();
     return folderApi;
 }
 

@@ -26,7 +26,7 @@ import { expect } from "chai";
 import "mocha";
 
 import { Configuration } from "../../src/configuration";
-import { ViewerApi } from "../../src/viewer_api";
+import { InfoApi } from "../../src/viewer_api";
 
 describe("auth_api", () => {
 
@@ -38,9 +38,9 @@ describe("auth_api", () => {
           
             const config = new Configuration(appSid, appKey);
             config.apiBaseUrl = settings.ApiBaseUrl;
-            const viewerApi = ViewerApi.fromConfig(config);
+            const infoApi = InfoApi.fromConfig(config);
 
-            return viewerApi.getSupportedFileFormats()
+            return infoApi.getSupportedFileFormats()
                 .catch((error) => {
                     expect(error.message).equal("invalid_client");
                 });

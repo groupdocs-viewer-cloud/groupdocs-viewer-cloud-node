@@ -50,7 +50,7 @@ describe("viewer_get_info_api", () => {
 
          it("TestGetInfoReturnsMissingFileInfo", () => {  
             const request = new GetInfoRequest(new ViewOptions());                      
-            return TestContext.getViewerApi().getInfo(request).catch((error) => {
+            return TestContext.getInfoApi().getInfo(request).catch((error) => {
                 expect(error.message).equal("Parameter \'FileInfo\' is not specified.");
             });
         });
@@ -59,7 +59,7 @@ describe("viewer_get_info_api", () => {
             const viewOptions = new ViewOptions();
             viewOptions.fileInfo = TestFile.NotExist.ToFileInfo();
             const request = new GetInfoRequest(viewOptions);
-            return TestContext.getViewerApi().getInfo(request).catch((error) => {
+            return TestContext.getInfoApi().getInfo(request).catch((error) => {
                 expect(error.message).equal("Can\'t find file located at \'some-folder\\NotExist.docx\'.");
             });
         });        
@@ -68,7 +68,7 @@ describe("viewer_get_info_api", () => {
             const viewOptions = new ViewOptions();
             viewOptions.fileInfo = TestFile.PasswordProtectedDocx.ToFileInfo();
             const request = new GetInfoRequest(viewOptions);
-            return TestContext.getViewerApi().getInfo(request)
+            return TestContext.getInfoApi().getInfo(request)
                      .then((result) => {                         
                          expect(result.pages.length).equal(4);
                          expect(result.attachments.length).equal(0);
@@ -79,7 +79,7 @@ describe("viewer_get_info_api", () => {
             const viewOptions = new ViewOptions();
             viewOptions.fileInfo = TestFile.OnePageDocx.ToFileInfo();
             const request = new GetInfoRequest(viewOptions);
-            return TestContext.getViewerApi().getInfo(request)
+            return TestContext.getInfoApi().getInfo(request)
                      .then((result) => {                         
                          expect(result.pages.length).equal(1);
                          expect(result.pages[0].number).equal(1);
@@ -92,7 +92,7 @@ describe("viewer_get_info_api", () => {
             viewOptions.viewFormat = ViewOptions.ViewFormatEnum.HTML;
             viewOptions.fileInfo = TestFile.OnePageDocx.ToFileInfo();
             const request = new GetInfoRequest(viewOptions);
-            return TestContext.getViewerApi().getInfo(request)
+            return TestContext.getInfoApi().getInfo(request)
                      .then((result) => {                         
                          expect(result.pages.length).equal(1);
                          expect(result.pages[0].number).equal(1);
@@ -106,7 +106,7 @@ describe("viewer_get_info_api", () => {
             viewOptions.viewFormat = ViewOptions.ViewFormatEnum.BMP;
             viewOptions.fileInfo = TestFile.OnePageDocx.ToFileInfo();
             const request = new GetInfoRequest(viewOptions);
-            return TestContext.getViewerApi().getInfo(request)
+            return TestContext.getInfoApi().getInfo(request)
                      .then((result) => {                         
                          expect(result.pages.length).equal(1);
                          expect(result.pages[0].number).equal(1);
@@ -122,7 +122,7 @@ describe("viewer_get_info_api", () => {
             renderOptions.renderHiddenPages = true;
             viewOptions.renderOptions = renderOptions;
             const request = new GetInfoRequest(viewOptions);
-            return TestContext.getViewerApi().getInfo(request)
+            return TestContext.getInfoApi().getInfo(request)
                      .then((result) => {                         
                          expect(result.pages.length).equal(3);
                      });
@@ -138,7 +138,7 @@ describe("viewer_get_info_api", () => {
             renderOptions.spreadsheetOptions = spsOptions;
             viewOptions.renderOptions = renderOptions;
             const request = new GetInfoRequest(viewOptions);
-            return TestContext.getViewerApi().getInfo(request)
+            return TestContext.getInfoApi().getInfo(request)
                      .then((result) => {                         
                          expect(result.pages.length).equal(2);
                      });
@@ -155,7 +155,7 @@ describe("viewer_get_info_api", () => {
             renderOptions.spreadsheetOptions = spsOptions;
             viewOptions.renderOptions = renderOptions;
             const request = new GetInfoRequest(viewOptions);
-            return TestContext.getViewerApi().getInfo(request)
+            return TestContext.getInfoApi().getInfo(request)
                      .then((result) => {                         
                          expect(result.pages.length).equal(3);
                      });
@@ -170,7 +170,7 @@ describe("viewer_get_info_api", () => {
             renderOptions.cadOptions = cadOptions;
             viewOptions.renderOptions = renderOptions;
             const request = new GetInfoRequest(viewOptions);
-            return TestContext.getViewerApi().getInfo(request)
+            return TestContext.getInfoApi().getInfo(request)
                      .then((result) => {                         
                          expect(result.pages.length).equal(3);
                      });
@@ -188,7 +188,7 @@ describe("viewer_get_info_api", () => {
             renderOptions.projectManagementOptions = projectOptions;
             viewOptions.renderOptions = renderOptions;
             const request = new GetInfoRequest(viewOptions);
-            return TestContext.getViewerApi().getInfo(request)
+            return TestContext.getInfoApi().getInfo(request)
                      .then((result) => {                         
                          expect(result.pages.length).equal(2);
                      });
@@ -202,7 +202,7 @@ describe("viewer_get_info_api", () => {
             imgOptions.extractText = true;
             viewOptions.renderOptions = imgOptions;            
             const request = new GetInfoRequest(viewOptions);
-            return TestContext.getViewerApi().getInfo(request)
+            return TestContext.getInfoApi().getInfo(request)
                      .then((result) => {                         
                          expect(result.pages.length).equal(1);
                          expect(result.pages[0].number).equal(1);                         

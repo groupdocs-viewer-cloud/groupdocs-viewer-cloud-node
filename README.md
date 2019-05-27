@@ -22,10 +22,10 @@ var appSid = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX";
 var appKey = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
 // construct ViewerApi
-var viewerApi = GroupDocs.ViewerApi.fromKeys(appSid, appKey);
+var infoApi = GroupDocs.InfoApi.fromKeys(appSid, appKey);
 
 // retrieve supported file-formats
-viewerApi.getSupportedFileFormats()
+infoApi.getSupportedFileFormats()
     .then(function (response) {
         console.log("Supported file-formats:")
         response.formats.forEach(function (format) {
@@ -41,17 +41,17 @@ Or compile and run same written in TypeScript:
 
 ```ts
 // load the module
-import { ViewerApi } from "groupdocs-viewer-cloud";
+import { InfoApi } from "groupdocs-viewer-cloud";
 
 // get your appSid and appKey at https://dashboard.groupdocs.cloud (free registration is required).
 const appSid: string = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX";
 const appKey: string = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
 // construct ViewerApi
-const viewerApi: ViewerApi = ViewerApi.fromKeys(appSid, appKey);
+const infoApi: InfoApi = InfoApi.fromKeys(appSid, appKey);
 
 // retrieve supported file-formats
-viewerApi.getSupportedFileFormats()
+infoApi.getSupportedFileFormats()
     .then((result) => {
         console.log("Supported file-formats:");
         result.formats.forEach((format) => {

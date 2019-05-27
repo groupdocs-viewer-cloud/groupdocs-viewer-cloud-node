@@ -2110,6 +2110,20 @@ export class MoveFolderRequest {
 }
 
 /**
+ * Request model for GetInfo operation.
+ */
+export class GetInfoRequest {
+    /**
+     * View options
+     */
+    public viewOptions: ViewOptions;
+    
+    public constructor(viewOptions: ViewOptions) {        
+        this.viewOptions = viewOptions;
+    }
+}
+
+/**
  * Request model for GetDiscUsage operation.
  */
 export class GetDiscUsageRequest {
@@ -2208,19 +2222,5 @@ export class DeleteViewRequest {
     
     public constructor(deleteViewOptions: DeleteViewOptions) {        
         this.deleteViewOptions = deleteViewOptions;
-    }
-}
-
-/**
- * Request model for GetInfo operation.
- */
-export class GetInfoRequest {
-    /**
-     * View options
-     */
-    public viewOptions: ViewOptions;
-    
-    public constructor(viewOptions: ViewOptions) {        
-        this.viewOptions = viewOptions;
     }
 }

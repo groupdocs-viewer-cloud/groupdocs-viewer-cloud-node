@@ -460,6 +460,93 @@ export class FolderApi {
 /**
  * GroupDocs.Viewer Cloud API 
  */
+export class InfoApi {
+    
+    /**
+     * Creates new instance of InfoApi
+     * @param appSid Application identifier (App SID).
+     * @param appKey Application private key (App Key).
+     */
+    public static fromKeys(appSid: string, appKey: string) {
+        const config = new Configuration(appSid, appKey);
+        return new InfoApi(config);
+    }
+
+    /**
+     * Creates new instance of InfoApi
+     * @param config API configuration.
+     */
+    public static fromConfig(config: Configuration) {
+        return new InfoApi(config);
+    }
+
+    /**
+     * Configuration
+     */
+    private configuration: Configuration;
+
+    /**
+     * @param config Configuration.
+     */
+    private constructor(config: Configuration) {
+        this.configuration = config;
+    }
+
+    /**
+     * Retrieve information about document pages
+     * @param requestObj contains request parameters
+     */
+    public async getInfo(requestObj: model.GetInfoRequest): Promise<model.InfoResult> {
+        if (requestObj === null || requestObj === undefined) {
+            throw new Error('Required parameter "requestObj" was null or undefined when calling getInfo.');
+        }
+
+        const localVarPath = this.configuration.getServerUrl() + "/viewer/info";
+        const queryParameters: any = {};
+
+        // verify required parameter 'requestObj.viewOptions' is not null or undefined
+        if (requestObj.viewOptions === null || requestObj.viewOptions === undefined) {
+            throw new Error('Required parameter "requestObj.viewOptions" was null or undefined when calling getInfo.');
+        }
+        
+        const requestOptions: request.Options = {
+            method: "POST",
+            qs: queryParameters,
+            uri: localVarPath,
+            json: true,
+            body: Serializer.serialize(requestObj.viewOptions, requestObj.viewOptions.constructor.name === "Object" ? "ViewOptions" : requestObj.viewOptions.constructor.name),
+        };
+
+        const response = await invokeApiMethod(requestOptions, this.configuration);
+        const result =  Serializer.deserialize(response.body, "InfoResult");
+        return Promise.resolve(result);
+    }
+
+    /**
+     * List supported file formats
+     * @param requestObj contains request parameters
+     */
+    public async getSupportedFileFormats(): Promise<model.FormatsResult> {
+
+        const localVarPath = this.configuration.getServerUrl() + "/viewer/formats";
+        const queryParameters: any = {};
+        
+        const requestOptions: request.Options = {
+            method: "GET",
+            qs: queryParameters,
+            uri: localVarPath,
+            json: true,
+        };
+
+        const response = await invokeApiMethod(requestOptions, this.configuration);
+        const result =  Serializer.deserialize(response.body, "FormatsResult");
+        return Promise.resolve(result);
+    }
+
+}
+/**
+ * GroupDocs.Viewer Cloud API 
+ */
 export class StorageApi {
     
     /**
@@ -614,24 +701,24 @@ export class StorageApi {
 /**
  * GroupDocs.Viewer Cloud API 
  */
-export class ViewerApi {
+export class ViewApi {
     
     /**
-     * Creates new instance of ViewerApi
+     * Creates new instance of ViewApi
      * @param appSid Application identifier (App SID).
      * @param appKey Application private key (App Key).
      */
     public static fromKeys(appSid: string, appKey: string) {
         const config = new Configuration(appSid, appKey);
-        return new ViewerApi(config);
+        return new ViewApi(config);
     }
 
     /**
-     * Creates new instance of ViewerApi
+     * Creates new instance of ViewApi
      * @param config API configuration.
      */
     public static fromConfig(config: Configuration) {
-        return new ViewerApi(config);
+        return new ViewApi(config);
     }
 
     /**
@@ -703,57 +790,6 @@ export class ViewerApi {
 
         const response = await invokeApiMethod(requestOptions, this.configuration);
         return Promise.resolve(response);
-    }
-
-    /**
-     * Retrieve information about document pages
-     * @param requestObj contains request parameters
-     */
-    public async getInfo(requestObj: model.GetInfoRequest): Promise<model.InfoResult> {
-        if (requestObj === null || requestObj === undefined) {
-            throw new Error('Required parameter "requestObj" was null or undefined when calling getInfo.');
-        }
-
-        const localVarPath = this.configuration.getServerUrl() + "/viewer/info";
-        const queryParameters: any = {};
-
-        // verify required parameter 'requestObj.viewOptions' is not null or undefined
-        if (requestObj.viewOptions === null || requestObj.viewOptions === undefined) {
-            throw new Error('Required parameter "requestObj.viewOptions" was null or undefined when calling getInfo.');
-        }
-        
-        const requestOptions: request.Options = {
-            method: "POST",
-            qs: queryParameters,
-            uri: localVarPath,
-            json: true,
-            body: Serializer.serialize(requestObj.viewOptions, requestObj.viewOptions.constructor.name === "Object" ? "ViewOptions" : requestObj.viewOptions.constructor.name),
-        };
-
-        const response = await invokeApiMethod(requestOptions, this.configuration);
-        const result =  Serializer.deserialize(response.body, "InfoResult");
-        return Promise.resolve(result);
-    }
-
-    /**
-     * List supported file formats
-     * @param requestObj contains request parameters
-     */
-    public async getSupportedFileFormats(): Promise<model.FormatsResult> {
-
-        const localVarPath = this.configuration.getServerUrl() + "/viewer/formats";
-        const queryParameters: any = {};
-        
-        const requestOptions: request.Options = {
-            method: "GET",
-            qs: queryParameters,
-            uri: localVarPath,
-            json: true,
-        };
-
-        const response = await invokeApiMethod(requestOptions, this.configuration);
-        const result =  Serializer.deserialize(response.body, "FormatsResult");
-        return Promise.resolve(result);
     }
 
 }

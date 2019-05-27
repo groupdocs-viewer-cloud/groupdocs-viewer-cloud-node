@@ -39,9 +39,9 @@ describe("formats_api", () => {
 
     describe("test_get_supported_file_formats", () => {
         it("should return list of supported formats", () => {            
-            const viewerApi = TestContext.getViewerApi();
+            const infoApi = TestContext.getInfoApi();
 
-            return viewerApi.getSupportedFileFormats()
+            return infoApi.getSupportedFileFormats()
                 .then((result) => {                   
                     for (const format of result.formats) {
                         expect(format.fileFormat).to.not.equal("");
