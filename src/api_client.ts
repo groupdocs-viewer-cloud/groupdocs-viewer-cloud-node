@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2019 Aspose Pty Ltd
+* Copyright (c) 2003-2020 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -99,9 +99,11 @@ async function invokeApiMethodInternal(requestOptions: request.Options, config: 
                             bodyContent = JSON.parse(bodyContent.toString("utf8"));
                         }
                         if (bodyContent.error) {
-                            reject({ message: bodyContent.error, code: response.statusCode });
-                        } else if (bodyContent.Error) {
-                            reject({ message: bodyContent.Error.Message, code: response.statusCode });
+                            if (bodyContent.error.message) {
+                                reject({ message: bodyContent.error.message, code: bodyContent.error.code });
+                            } else {
+                                reject({ message: bodyContent.error, code: response.statusCode });
+                            }
                         }
                     } catch (error) {
                         reject({ message: "Error while parse server error: " + error });

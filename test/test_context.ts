@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2019 Aspose Pty Ltd
+* Copyright (c) 2003-2020 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -84,18 +84,19 @@ export function getFolderApi() {
 /**
  * Uploads test files
  */
-export function uploadTestFiles() {
+export async function uploadTestFiles() {
     if(uploaded) return;
     getViewerApi();    
     const testFiles = TestFile.GetTestFiles();
-    testFiles.forEach(async function (file) {
-        const response = await storageApi.objectExists(new ObjectExistsRequest(file.GetPath()));
+    for(let i=0; i<testFiles.length; i++) {
+        let file = testFiles[i];        
+        const response = await storageApi.objectExists(new ObjectExistsRequest(file.GetPath()));        
         if (!response.exists) {
             console.log("Uploading: " + file.GetPath());
             let filebuf = getTestFileBuffer(file);
             await fileApi.uploadFile(new UploadFileRequest(file.GetPath(), filebuf));
-        }        
-    });
+        }           
+    }    
     uploaded = true;
 }
 

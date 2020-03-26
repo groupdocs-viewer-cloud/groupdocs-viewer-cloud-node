@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2019 Aspose Pty Ltd
+* Copyright (c) 2003-2020 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -242,7 +242,7 @@ export class FileApi {
         }
 
         const requestOptions: request.Options = {
-            method: "POST",
+            method: "PUT",
             qs: queryParameters,
             uri: localVarPath,
             json: true,
@@ -347,7 +347,7 @@ export class FolderApi {
         
         localVarPath = addQueryParameterToUrl(localVarPath, queryParameters, "storageName", requestObj.storageName);
         const requestOptions: request.Options = {
-            method: "POST",
+            method: "PUT",
             qs: queryParameters,
             uri: localVarPath,
             json: true,

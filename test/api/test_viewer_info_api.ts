@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2019 Aspose Pty Ltd
+* Copyright (c) 2003-2020 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -103,7 +103,7 @@ describe("viewer_get_info_api", () => {
 
         it("TestGetInfoWithImageViewFormat", () => {  
             const viewOptions = new ViewOptions();
-            viewOptions.viewFormat = ViewOptions.ViewFormatEnum.BMP;
+            viewOptions.viewFormat = ViewOptions.ViewFormatEnum.PNG;
             viewOptions.fileInfo = TestFile.OnePageDocx.ToFileInfo();
             const request = new GetInfoRequest(viewOptions);
             return TestContext.getInfoApi().getInfo(request)
@@ -180,17 +180,17 @@ describe("viewer_get_info_api", () => {
             const viewOptions = new ViewOptions();            
             viewOptions.fileInfo = TestFile.ProjectMpp.ToFileInfo();
             var projectOptions = new ProjectManagementOptions();
-            projectOptions.pageSize = "Unknown";
-            projectOptions.timeUnit = "Months";
-            projectOptions.startDate = new Date("2008/07/01");
-            projectOptions.endDate = new Date("2008/07/31");
+            projectOptions.pageSize = ProjectManagementOptions.PageSizeEnum.Unspecified;
+            projectOptions.timeUnit = ProjectManagementOptions.TimeUnitEnum.Months;
+            projectOptions.startDate = new Date(Date.UTC(2008, 7, 1, 0, 0, 0));
+            projectOptions.endDate = new Date(Date.UTC(2008, 7, 31, 0, 0, 0));
             var renderOptions = new RenderOptions();
             renderOptions.projectManagementOptions = projectOptions;
             viewOptions.renderOptions = renderOptions;
             const request = new GetInfoRequest(viewOptions);
             return TestContext.getInfoApi().getInfo(request)
                      .then((result) => {                         
-                         expect(result.pages.length).equal(2);
+                         expect(result.pages.length).equal(1);
                      });
         });
  
@@ -206,7 +206,7 @@ describe("viewer_get_info_api", () => {
                      .then((result) => {                         
                          expect(result.pages.length).equal(1);
                          expect(result.pages[0].number).equal(1);                         
-                         expect(result.pages[0].rows.length).greaterThan(0);
+                         expect(result.pages[0].lines.length).greaterThan(0);
                          expect(result.attachments.length).equal(0);
                      });
         });        

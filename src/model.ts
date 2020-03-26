@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2019 Aspose Pty Ltd
+* Copyright (c) 2003-2020 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,72 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 */
+
+/**
+ * Provides options for rendering archive files
+ */
+export class ArchiveOptions {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "folder",
+            baseName: "folder",
+            type: "string",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return ArchiveOptions.attributeTypeMap;
+    }
+
+    /**
+     * The folder inside the archive to be rendered
+     */
+    public folder: string;
+    
+    public constructor(init?: Partial<ArchiveOptions>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
+ * Represents view information for archive file
+ */
+export class ArchiveViewInfo {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "folders",
+            baseName: "folders",
+            type: "Array<string>",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return ArchiveViewInfo.attributeTypeMap;
+    }
+
+    /**
+     * The folders contained by the archive file
+     */
+    public folders: Array<string>;
+    
+    public constructor(init?: Partial<ArchiveViewInfo>) {
+        
+        Object.assign(this, init);
+    }        
+}
 
 /**
  * Attachment information
@@ -78,6 +144,26 @@ export class CadOptions {
             name: "height",
             baseName: "height",
             type: "number",
+        },        
+        {
+            name: "tiles",
+            baseName: "tiles",
+            type: "Array<Tile>",
+        },        
+        {
+            name: "renderLayouts",
+            baseName: "renderLayouts",
+            type: "boolean",
+        },        
+        {
+            name: "layoutName",
+            baseName: "layoutName",
+            type: "string",
+        },        
+        {
+            name: "layers",
+            baseName: "layers",
+            type: "Array<string>",
         }    ];
 
     /**
@@ -102,7 +188,70 @@ export class CadOptions {
      */
     public height: number;
     
+    /**
+     * The drawing regions to render This option supported only for DWG and DWT file types The RenderLayouts and LayoutName options are ignored when rendering by tiles
+     */
+    public tiles: Array<Tile>;
+    
+    /**
+     * Indicates whether layouts from CAD document should be rendered
+     */
+    public renderLayouts: boolean;
+    
+    /**
+     * The name of the specific layout to render. Layout name is case-sensitive
+     */
+    public layoutName: string;
+    
+    /**
+     * The CAD drawing layers to render By default all layers are rendered; Layer names are case-sensitive
+     */
+    public layers: Array<string>;
+    
     public constructor(init?: Partial<CadOptions>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
+ * Represents view information for CAD drawing
+ */
+export class CadViewInfo {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "layers",
+            baseName: "layers",
+            type: "Array<Layer>",
+        },        
+        {
+            name: "layouts",
+            baseName: "layouts",
+            type: "Array<Layout>",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return CadViewInfo.attributeTypeMap;
+    }
+
+    /**
+     * The list of layers contained by the CAD drawing
+     */
+    public layers: Array<Layer>;
+    
+    /**
+     * The list of layouts contained by the CAD drawing
+     */
+    public layouts: Array<Layout>;
+    
+    public constructor(init?: Partial<CadViewInfo>) {
         
         Object.assign(this, init);
     }        
@@ -121,6 +270,11 @@ export class DeleteViewOptions {
             name: "fileInfo",
             baseName: "fileInfo",
             type: "FileInfo",
+        },        
+        {
+            name: "outputPath",
+            baseName: "outputPath",
+            type: "string",
         }    ];
 
     /**
@@ -134,6 +288,11 @@ export class DeleteViewOptions {
      * File info
      */
     public fileInfo: FileInfo;
+    
+    /**
+     * The output path Default value is 'viewer\\{input file path}_{file extension}\\'
+     */
+    public outputPath: string;
     
     public constructor(init?: Partial<DeleteViewOptions>) {
         
@@ -196,7 +355,7 @@ export class EmailOptions {
         {
             name: "pageSize",
             baseName: "pageSize",
-            type: "string",
+            type: "EmailOptions.PageSizeEnum",
         },        
         {
             name: "fieldLabels",
@@ -212,9 +371,9 @@ export class EmailOptions {
     }
 
     /**
-     * The size of the output page when rendering as PDF or image. Supported values {Unknown|Letter|Ledger|A0|A1|A2|A3}: 1. Unknown - the default, unspecified page size. 2. Letter - the size of the Letter page in points is 792x612. 3. Ledger - the size of the Letter page in points is 1224x792. 4. A0 - the size of the A0 page in points is 3371x2384. 5. A1 - the size of the A1 page in points is 2384x1685. 6. A2 - the size of the A2 page in points is 1684x1190. 7. A3 - the size of the A3 page in points is 1190x842. 8. A4 - the size of the A4 page in points is 842x595.
+     * The size of the output page when rendering as PDF or image.
      */
-    public pageSize: string;
+    public pageSize: EmailOptions.PageSizeEnum;
     
     /**
      * The list of supported email message field labels: 1. Field: \"Anniversary\" - default label is \"Anniversary\". 2. Field: \"Attachments\" - default label is \"Attachments\". 3. Field: \"Bcc\" - default label is \"Bcc\". 4. Field: \"Birthday\" - default label is \"Birthday\". 5. Field: \"Business\" - default label is \"Business\". 6. Field: \"BusinessAddress\" - default label is \"Business Address\". 7. Field: \"BusinessFax\" - default label is \"Business Fax\". 8. Field: \"BusinessHomepage\" - default label is \"BusinessHomePage\". 9. Field: \"Cc\" - default label is \"Cc\". 10. Field: \"Company\" - default label is \"Company\". 11. Field: \"Department\" - default label is \"Department\". 12. Field: \"Email\" - default label is \"Email\". 13. Field: \"EmailDisplayAs\" - default label is \"Email Display As\". 14. Field: \"Email2\" - default label is \"Email2\". 15. Field: \"Email2DisplayAs\" - default label is \"Email2 Display As\". 16. Field: \"Email3\" - default label is \"Email3\". 17. Field: \"Email3DisplayAs\" - default label is \"Email3 Display As\". 18. Field: \"End\" - default label is \"End\". 19. Field: \"FirstName\" - default label is \"First Name\". 20. Field: \"From\" - default label is \"From\". 21. Field: \"FullName\" - default label is \"Full Name\". 22. Field: \"Gender\" - default label is \"Gender\". 23. Field: \"Hobbies\" - default label is \"Hobbies\". 24. Field: \"Home\" - default label is \"Home\". 25. Field: \"HomeAddress\" - default label is \"Home Address\". 26. Field: \"Importance\" - default label is \"Importance\". 27. Field: \"JobTitle\" - default label is \"Job Title\". 28. Field: \"LastName\" - default label is \"Last Name\". 29. Field: \"Location\" - default label is \"Location\". 30. Field: \"MiddleName\" - default label is \"Middle Name\". 31. Field: \"Mobile\" - default label is \"Mobile\". 32. Field: \"Organizer\" - default label is \"Organizer\". 33. Field: \"OtherAddress\" - default label is \"Other Address\". 34. Field: \"PersonalHomepage\" - default label is \"PersonalHomePage\". 35. Field: \"Profession\" - default label is \"Profession\". 36. Field: \"Recurrence\" - default label is \"Recurrence\". 37. Field: \"RecurrencePattern\" - default label is \"Recurrence Pattern\". 38. Field: \"RequiredAttendees\" - default label is \"Required Attendees\". 39. Field: \"Sent\" - default label is \"Sent\". 40. Field: \"ShowTimeAs\" - default label is \"Show Time As\". 41. Field: \"SpousePartner\" - default label is \"Spouse/Partner\". 42. Field: \"Start\" - default label is \"Start\". 43. Field: \"Subject\" - default label is \"Subject\". 44. Field: \"To\" - default label is \"To\". 45. Field: \"UserField1\" - default label is \"User Field 1\". 46. Field: \"UserField2\" - default label is \"User Field 2\". 47. Field: \"UserField3\" - default label is \"User Field 3\". 48. Field: \"UserField4\" - default label is \"User Field 4\".
@@ -227,6 +386,21 @@ export class EmailOptions {
     }        
 }
 
+// tslint:disable:quotemark
+// tslint:disable-next-line:no-namespace
+export namespace EmailOptions {
+    export enum PageSizeEnum {
+        Unspecified = 'Unspecified' as any,
+        Letter = 'Letter' as any,
+        Ledger = 'Ledger' as any,
+        A0 = 'A0' as any,
+        A1 = 'A1' as any,
+        A2 = 'A2' as any,
+        A3 = 'A3' as any,
+        A4 = 'A4' as any,
+    }
+}
+// tslint:enable:quotemark
 /**
  * The error details
  */
@@ -571,6 +745,16 @@ export class InfoResult {
      */
     public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
+            name: "formatExtension",
+            baseName: "formatExtension",
+            type: "string",
+        },        
+        {
+            name: "format",
+            baseName: "format",
+            type: "string",
+        },        
+        {
             name: "pages",
             baseName: "pages",
             type: "Array<PageInfo>",
@@ -579,6 +763,31 @@ export class InfoResult {
             name: "attachments",
             baseName: "attachments",
             type: "Array<AttachmentInfo>",
+        },        
+        {
+            name: "archiveViewInfo",
+            baseName: "archiveViewInfo",
+            type: "ArchiveViewInfo",
+        },        
+        {
+            name: "cadViewInfo",
+            baseName: "cadViewInfo",
+            type: "CadViewInfo",
+        },        
+        {
+            name: "projectManagementViewInfo",
+            baseName: "projectManagementViewInfo",
+            type: "ProjectManagementViewInfo",
+        },        
+        {
+            name: "outlookViewInfo",
+            baseName: "outlookViewInfo",
+            type: "OutlookViewInfo",
+        },        
+        {
+            name: "pdfViewInfo",
+            baseName: "pdfViewInfo",
+            type: "PdfViewInfo",
         }    ];
 
     /**
@@ -589,6 +798,16 @@ export class InfoResult {
     }
 
     /**
+     * File format extension
+     */
+    public formatExtension: string;
+    
+    /**
+     * File format
+     */
+    public format: string;
+    
+    /**
      * View result pages
      */
     public pages: Array<PageInfo>;
@@ -598,7 +817,128 @@ export class InfoResult {
      */
     public attachments: Array<AttachmentInfo>;
     
+    /**
+     * Represents view information for archive file
+     */
+    public archiveViewInfo: ArchiveViewInfo;
+    
+    /**
+     * Represents view information for CAD drawing
+     */
+    public cadViewInfo: CadViewInfo;
+    
+    /**
+     * Represents view information for MS Project document
+     */
+    public projectManagementViewInfo: ProjectManagementViewInfo;
+    
+    /**
+     * Represents view information for Outlook Data file
+     */
+    public outlookViewInfo: OutlookViewInfo;
+    
+    /**
+     * Represents view information for PDF document
+     */
+    public pdfViewInfo: PdfViewInfo;
+    
     public constructor(init?: Partial<InfoResult>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
+ * Represents layer contained by the CAD drawing
+ */
+export class Layer {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "name",
+            baseName: "name",
+            type: "string",
+        },        
+        {
+            name: "visible",
+            baseName: "visible",
+            type: "boolean",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return Layer.attributeTypeMap;
+    }
+
+    /**
+     * The name of the layer
+     */
+    public name: string;
+    
+    /**
+     * The layer visibility indicator
+     */
+    public visible: boolean;
+    
+    public constructor(init?: Partial<Layer>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
+ * Represents layout contained by the CAD drawing
+ */
+export class Layout {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "name",
+            baseName: "name",
+            type: "string",
+        },        
+        {
+            name: "width",
+            baseName: "width",
+            type: "number",
+        },        
+        {
+            name: "height",
+            baseName: "height",
+            type: "number",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return Layout.attributeTypeMap;
+    }
+
+    /**
+     * The name of the layout
+     */
+    public name: string;
+    
+    /**
+     * The width of the layout
+     */
+    public width: number;
+    
+    /**
+     * The height of the layout
+     */
+    public height: number;
+    
+    public constructor(init?: Partial<Layout>) {
         
         Object.assign(this, init);
     }        
@@ -711,6 +1051,102 @@ export class ObjectExist {
 }
 
 /**
+ * Provides options for rendering Outlook data files
+ */
+export class OutlookOptions {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "folder",
+            baseName: "folder",
+            type: "string",
+        },        
+        {
+            name: "textFilter",
+            baseName: "textFilter",
+            type: "string",
+        },        
+        {
+            name: "addressFilter",
+            baseName: "addressFilter",
+            type: "string",
+        },        
+        {
+            name: "maxItemsInFolder",
+            baseName: "maxItemsInFolder",
+            type: "number",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return OutlookOptions.attributeTypeMap;
+    }
+
+    /**
+     * The name of the folder (e.g. Inbox, Sent Item or Deleted Items) to render
+     */
+    public folder: string;
+    
+    /**
+     * The keywords used to filter messages
+     */
+    public textFilter: string;
+    
+    /**
+     * The email-address used to filter messages by sender or recipient
+     */
+    public addressFilter: string;
+    
+    /**
+     * The maximum number of messages or items, that can be rendered from one folder
+     */
+    public maxItemsInFolder: number;
+    
+    public constructor(init?: Partial<OutlookOptions>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
+ * Represents view information for Outlook Data file
+ */
+export class OutlookViewInfo {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "folders",
+            baseName: "folders",
+            type: "Array<string>",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return OutlookViewInfo.attributeTypeMap;
+    }
+
+    /**
+     * The list of folders contained by the Outlook Data file
+     */
+    public folders: Array<string>;
+    
+    public constructor(init?: Partial<OutlookViewInfo>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
  * Page information
  */
 export class PageInfo {
@@ -735,9 +1171,14 @@ export class PageInfo {
             type: "number",
         },        
         {
-            name: "rows",
-            baseName: "rows",
-            type: "Array<Row>",
+            name: "visible",
+            baseName: "visible",
+            type: "boolean",
+        },        
+        {
+            name: "lines",
+            baseName: "lines",
+            type: "Array<Line>",
         }    ];
 
     /**
@@ -748,26 +1189,200 @@ export class PageInfo {
     }
 
     /**
-     * Page number
+     * The page number
      */
     public number: number;
     
     /**
-     * Image Page width
+     * The width of the page in pixels when viewing as JPG or PNG
      */
     public width: number;
     
     /**
-     * Image Page height
+     * The height of the page in pixels when viewing as JPG or PNG
      */
     public height: number;
     
     /**
-     * Image Page rows
+     * The page visibility indicator
      */
-    public rows: Array<Row>;
+    public visible: boolean;
+    
+    /**
+     * The lines contained by the page when viewing as JPG or PNG with enabled Text Extraction
+     */
+    public lines: Array<Line>;
     
     public constructor(init?: Partial<PageInfo>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
+ * Clockwise page rotation 
+ */
+export class PageRotation {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "pageNumber",
+            baseName: "pageNumber",
+            type: "number",
+        },        
+        {
+            name: "rotationAngle",
+            baseName: "rotationAngle",
+            type: "PageRotation.RotationAngleEnum",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return PageRotation.attributeTypeMap;
+    }
+
+    /**
+     * Page number to rotate
+     */
+    public pageNumber: number;
+    
+    /**
+     * Rotation angle
+     */
+    public rotationAngle: PageRotation.RotationAngleEnum;
+    
+    public constructor(init?: Partial<PageRotation>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+// tslint:disable:quotemark
+// tslint:disable-next-line:no-namespace
+export namespace PageRotation {
+    export enum RotationAngleEnum {
+        On90Degree = 'On90Degree' as any,
+        On180Degree = 'On180Degree' as any,
+        On270Degree = 'On270Degree' as any,
+    }
+}
+// tslint:enable:quotemark
+/**
+ * Provides options for rendering PDF documents
+ */
+export class PdfDocumentOptions {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "disableCharsGrouping",
+            baseName: "disableCharsGrouping",
+            type: "boolean",
+        },        
+        {
+            name: "enableLayeredRendering",
+            baseName: "enableLayeredRendering",
+            type: "boolean",
+        },        
+        {
+            name: "enableFontHinting",
+            baseName: "enableFontHinting",
+            type: "boolean",
+        },        
+        {
+            name: "renderOriginalPageSize",
+            baseName: "renderOriginalPageSize",
+            type: "boolean",
+        },        
+        {
+            name: "imageQuality",
+            baseName: "imageQuality",
+            type: "PdfDocumentOptions.ImageQualityEnum",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return PdfDocumentOptions.attributeTypeMap;
+    }
+
+    /**
+     * Disables chars grouping to keep maximum precision during chars positioning when rendering the page
+     */
+    public disableCharsGrouping: boolean;
+    
+    /**
+     * Enables rendering of text and graphics according to z-order in original PDF document  when rendering into HTML
+     */
+    public enableLayeredRendering: boolean;
+    
+    /**
+     * Enables font hinting. The font hinting adjusts the display of an outline font. Supported only for TTF fonts when these fonts are used in source document.
+     */
+    public enableFontHinting: boolean;
+    
+    /**
+     * When this option enabled the output pages will have the same size in pixels as page size in a source PDF document. By default GroupDocs.Viewer calculates output image page size for better rendering quality. This option is supported when rendering into PNG or JPG formats.
+     */
+    public renderOriginalPageSize: boolean;
+    
+    /**
+     * Specifies output image quality for image resources when rendering into HTML. The default value is Low
+     */
+    public imageQuality: PdfDocumentOptions.ImageQualityEnum;
+    
+    public constructor(init?: Partial<PdfDocumentOptions>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+// tslint:disable:quotemark
+// tslint:disable-next-line:no-namespace
+export namespace PdfDocumentOptions {
+    export enum ImageQualityEnum {
+        Low = 'Low' as any,
+        Medium = 'Medium' as any,
+        High = 'High' as any,
+    }
+}
+// tslint:enable:quotemark
+/**
+ * Represents view information for PDF document
+ */
+export class PdfViewInfo {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "printingAllowed",
+            baseName: "printingAllowed",
+            type: "boolean",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return PdfViewInfo.attributeTypeMap;
+    }
+
+    /**
+     * Indicates if printing of the document is allowed
+     */
+    public printingAllowed: boolean;
+    
+    public constructor(init?: Partial<PdfViewInfo>) {
         
         Object.assign(this, init);
     }        
@@ -785,12 +1400,12 @@ export class ProjectManagementOptions {
         {
             name: "pageSize",
             baseName: "pageSize",
-            type: "string",
+            type: "ProjectManagementOptions.PageSizeEnum",
         },        
         {
             name: "timeUnit",
             baseName: "timeUnit",
-            type: "string",
+            type: "ProjectManagementOptions.TimeUnitEnum",
         },        
         {
             name: "startDate",
@@ -811,14 +1426,14 @@ export class ProjectManagementOptions {
     }
 
     /**
-     * The size of the page. Supported values {Unknown|Letter|Ledger|A0|A1|A2|A3}: 1. Unknown - the default, unspecified page size. 2. Letter - the size of the Letter page in points is 792x612. 3. Ledger - the size of the Letter page in points is 1224x792. 4. A0 - the size of the A0 page in points is 3371x2384. 5. A1 - the size of the A1 page in points is 2384x1685. 6. A2 - the size of the A2 page in points is 1684x1190. 7. A3 - the size of the A3 page in points is 1190x842. 8. A4 - the size of the A4 page in points is 842x595.
+     * The size of the page.
      */
-    public pageSize: string;
+    public pageSize: ProjectManagementOptions.PageSizeEnum;
     
     /**
-     * The time unit to use as minimal point. Supported values {Unknown|Days|ThirdsOfMonths|Months}: 1. Unknown - unknown, unspecified time scale. 2. Days - one day interval. 3. ThirdsOfMonths - one third of the month. 4. Months - one month interval.
+     * The time unit to use as minimal point.
      */
-    public timeUnit: string;
+    public timeUnit: ProjectManagementOptions.TimeUnitEnum;
     
     /**
      * The start date of a Gantt Chart View to render.        
@@ -831,6 +1446,70 @@ export class ProjectManagementOptions {
     public endDate: Date;
     
     public constructor(init?: Partial<ProjectManagementOptions>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+// tslint:disable:quotemark
+// tslint:disable-next-line:no-namespace
+export namespace ProjectManagementOptions {
+    export enum PageSizeEnum {
+        Unspecified = 'Unspecified' as any,
+        Letter = 'Letter' as any,
+        Ledger = 'Ledger' as any,
+        A0 = 'A0' as any,
+        A1 = 'A1' as any,
+        A2 = 'A2' as any,
+        A3 = 'A3' as any,
+        A4 = 'A4' as any,
+    }
+    export enum TimeUnitEnum {
+        Unspecified = 'Unspecified' as any,
+        Days = 'Days' as any,
+        ThirdsOfMonths = 'ThirdsOfMonths' as any,
+        Months = 'Months' as any,
+    }
+}
+// tslint:enable:quotemark
+/**
+ * Represents view information for MS Project document
+ */
+export class ProjectManagementViewInfo {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "startDate",
+            baseName: "startDate",
+            type: "Date",
+        },        
+        {
+            name: "endDate",
+            baseName: "endDate",
+            type: "Date",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return ProjectManagementViewInfo.attributeTypeMap;
+    }
+
+    /**
+     * The date time from which the project started
+     */
+    public startDate: Date;
+    
+    /**
+     * The date time when the project is to be completed
+     */
+    public endDate: Date;
+    
+    public constructor(init?: Partial<ProjectManagementViewInfo>) {
         
         Object.assign(this, init);
     }        
@@ -856,6 +1535,16 @@ export class RenderOptions {
             type: "number",
         },        
         {
+            name: "pagesToRender",
+            baseName: "pagesToRender",
+            type: "Array<number>",
+        },        
+        {
+            name: "pageRotations",
+            baseName: "pageRotations",
+            type: "Array<PageRotation>",
+        },        
+        {
             name: "defaultFontName",
             baseName: "defaultFontName",
             type: "string",
@@ -868,6 +1557,11 @@ export class RenderOptions {
         {
             name: "renderComments",
             baseName: "renderComments",
+            type: "boolean",
+        },        
+        {
+            name: "renderNotes",
+            baseName: "renderNotes",
             type: "boolean",
         },        
         {
@@ -894,6 +1588,26 @@ export class RenderOptions {
             name: "projectManagementOptions",
             baseName: "projectManagementOptions",
             type: "ProjectManagementOptions",
+        },        
+        {
+            name: "pdfDocumentOptions",
+            baseName: "pdfDocumentOptions",
+            type: "PdfDocumentOptions",
+        },        
+        {
+            name: "wordProcessingOptions",
+            baseName: "wordProcessingOptions",
+            type: "WordProcessingOptions",
+        },        
+        {
+            name: "outlookOptions",
+            baseName: "outlookOptions",
+            type: "OutlookOptions",
+        },        
+        {
+            name: "archiveOptions",
+            baseName: "archiveOptions",
+            type: "ArchiveOptions",
         }    ];
 
     /**
@@ -914,6 +1628,16 @@ export class RenderOptions {
     public countPagesToRender: number;
     
     /**
+     * Pages list to render. Ignored, if StartPageNumber and CountPagesToRender are provided
+     */
+    public pagesToRender: Array<number>;
+    
+    /**
+     * Page rotations
+     */
+    public pageRotations: Array<PageRotation>;
+    
+    /**
      * Default font name may be specified in following cases: - You want to generally specify the default font to fall back on, if particular font   in the document cannot be found during rendering. - Your document uses fonts, that contain non-English characters and you want to make sure   any missing font is replaced with one that has the same character set available.
      */
     public defaultFontName: string;
@@ -924,9 +1648,14 @@ export class RenderOptions {
     public defaultEncoding: string;
     
     /**
-     * When enabled comments will be rendered to the output.
+     * When enabled comments will be rendered to the output
      */
     public renderComments: boolean;
+    
+    /**
+     * When enabled notes will be rendered to the output
+     */
+    public renderNotes: boolean;
     
     /**
      * When enabled hidden pages, sheets or slides will be rendered to the output
@@ -934,24 +1663,44 @@ export class RenderOptions {
     public renderHiddenPages: boolean;
     
     /**
-     * Rendering options for Spreadsheet file formats. Spreadsheet file formats include files with extensions: .xls, .xlsx, .xlsm, .xlsb, .csv, .ods, .ots, .xltx, .xltm, .tsv 
+     * Rendering options for Spreadsheet source file formats Spreadsheet file formats include files with extensions: .xls, .xlsx, .xlsm, .xlsb, .csv, .ods, .ots, .xltx, .xltm, .tsv 
      */
     public spreadsheetOptions: SpreadsheetOptions;
     
     /**
-     * Rendering options for CAD file formats. CAD file formats include files with extensions: .dwg, .dxf, .dgn, .ifc, .stl
+     * Rendering options for CAD source file formats CAD file formats include files with extensions: .dwg, .dxf, .dgn, .ifc, .stl
      */
     public cadOptions: CadOptions;
     
     /**
-     * Rendering options for Email file formats. Email file formats include files with extensions: .msg, .eml, .emlx, .ifc, .stl
+     * Rendering options for Email source file formats Email file formats include files with extensions: .msg, .eml, .emlx, .ifc, .stl
      */
     public emailOptions: EmailOptions;
     
     /**
-     * Rendering options for Project file formats. Project file formats include files with extensions: .mpt, .mpp
+     * Rendering options for MS Project source file formats Project file formats include files with extensions: .mpt, .mpp
      */
     public projectManagementOptions: ProjectManagementOptions;
+    
+    /**
+     * Rendering options for PDF source file formats
+     */
+    public pdfDocumentOptions: PdfDocumentOptions;
+    
+    /**
+     * Rendering options for WordProcessing source file formats
+     */
+    public wordProcessingOptions: WordProcessingOptions;
+    
+    /**
+     * Rendering options for Outlook source file formats
+     */
+    public outlookOptions: OutlookOptions;
+    
+    /**
+     * Rendering options for Archive source file formats
+     */
+    public archiveOptions: ArchiveOptions;
     
     public constructor(init?: Partial<RenderOptions>) {
         
@@ -997,99 +1746,6 @@ export class Resource {
     public downloadUrl: string;
     
     public constructor(init?: Partial<Resource>) {
-        
-        Object.assign(this, init);
-    }        
-}
-
-/**
- * Page row with text
- */
-export class Row {
-
-    /**
-     * Attribute type map
-     */
-    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            name: "text",
-            baseName: "text",
-            type: "string",
-        },        
-        {
-            name: "rowLeft",
-            baseName: "rowLeft",
-            type: "number",
-        },        
-        {
-            name: "rowTop",
-            baseName: "rowTop",
-            type: "number",
-        },        
-        {
-            name: "rowWidth",
-            baseName: "rowWidth",
-            type: "number",
-        },        
-        {
-            name: "rowHeight",
-            baseName: "rowHeight",
-            type: "number",
-        },        
-        {
-            name: "textCoordinates",
-            baseName: "textCoordinates",
-            type: "Array<number>",
-        },        
-        {
-            name: "characterCoordinates",
-            baseName: "characterCoordinates",
-            type: "Array<number>",
-        }    ];
-
-    /**
-     * Returns attribute type map
-     */
-    public static getAttributeTypeMap() {
-        return Row.attributeTypeMap;
-    }
-
-    /**
-     * Row text
-     */
-    public text: string;
-    
-    /**
-     * Row left coordinate
-     */
-    public rowLeft: number;
-    
-    /**
-     * Row top coordinate
-     */
-    public rowTop: number;
-    
-    /**
-     * Row width
-     */
-    public rowWidth: number;
-    
-    /**
-     * Row height
-     */
-    public rowHeight: number;
-    
-    /**
-     * Text coordinates
-     */
-    public textCoordinates: Array<number>;
-    
-    /**
-     * Characters coordinates
-     */
-    public characterCoordinates: Array<number>;
-    
-    public constructor(init?: Partial<Row>) {
         
         Object.assign(this, init);
     }        
@@ -1143,6 +1799,11 @@ export class SpreadsheetOptions {
             name: "renderPrintAreaOnly",
             baseName: "renderPrintAreaOnly",
             type: "boolean",
+        },        
+        {
+            name: "textOverflowMode",
+            baseName: "textOverflowMode",
+            type: "SpreadsheetOptions.TextOverflowModeEnum",
         }    ];
 
     /**
@@ -1192,12 +1853,28 @@ export class SpreadsheetOptions {
      */
     public renderPrintAreaOnly: boolean;
     
+    /**
+     * The text overflow mode for rendering spreadsheet documents into HTML
+     */
+    public textOverflowMode: SpreadsheetOptions.TextOverflowModeEnum;
+    
     public constructor(init?: Partial<SpreadsheetOptions>) {
         
         Object.assign(this, init);
     }        
 }
 
+// tslint:disable:quotemark
+// tslint:disable-next-line:no-namespace
+export namespace SpreadsheetOptions {
+    export enum TextOverflowModeEnum {
+        Overlay = 'Overlay' as any,
+        OverlayIfNextIsEmpty = 'OverlayIfNextIsEmpty' as any,
+        AutoFitColumn = 'AutoFitColumn' as any,
+        HideText = 'HideText' as any,
+    }
+}
+// tslint:enable:quotemark
 /**
  * Storage exists
  */
@@ -1305,6 +1982,142 @@ export class StorageFile {
 }
 
 /**
+ * Text element
+ */
+export class TextElement {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "x",
+            baseName: "x",
+            type: "number",
+        },        
+        {
+            name: "y",
+            baseName: "y",
+            type: "number",
+        },        
+        {
+            name: "width",
+            baseName: "width",
+            type: "number",
+        },        
+        {
+            name: "height",
+            baseName: "height",
+            type: "number",
+        },        
+        {
+            name: "value",
+            baseName: "value",
+            type: "string",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return TextElement.attributeTypeMap;
+    }
+
+    /**
+     * The X coordinate of the highest left point on the page layout where the rectangle that contains element begins.             
+     */
+    public x: number;
+    
+    /**
+     * The Y coordinate of the highest left point on the page layout where the rectangle that contains element begins.             
+     */
+    public y: number;
+    
+    /**
+     * The width of the rectangle which contains the element (in pixels).              
+     */
+    public width: number;
+    
+    /**
+     * The height of the rectangle which contains the element (in pixels).              
+     */
+    public height: number;
+    
+    /**
+     * The element value
+     */
+    public value: string;
+    
+    public constructor(init?: Partial<TextElement>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
+ * Represents drawing region
+ */
+export class Tile {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "startPointX",
+            baseName: "startPointX",
+            type: "number",
+        },        
+        {
+            name: "startPointY",
+            baseName: "startPointY",
+            type: "number",
+        },        
+        {
+            name: "width",
+            baseName: "width",
+            type: "number",
+        },        
+        {
+            name: "height",
+            baseName: "height",
+            type: "number",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return Tile.attributeTypeMap;
+    }
+
+    /**
+     * The X coordinate of the lowest left point on the drawing where the tile begins
+     */
+    public startPointX: number;
+    
+    /**
+     * The Y coordinate of the lowest left point on the drawing where the tile begins
+     */
+    public startPointY: number;
+    
+    /**
+     * The width of the tile in pixels
+     */
+    public width: number;
+    
+    /**
+     * The height of the tile in pixels
+     */
+    public height: number;
+    
+    public constructor(init?: Partial<Tile>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
  * View options
  */
 export class ViewOptions {
@@ -1357,12 +2170,12 @@ export class ViewOptions {
     public fileInfo: FileInfo;
     
     /**
-     * View format (HTML, PNG, JPG, BMP or PDF) Default value is HTML.
+     * View format (HTML, PNG, JPG, or PDF) Default value is HTML.
      */
     public viewFormat: ViewOptions.ViewFormatEnum;
     
     /**
-     * The output path. Default value is 'viewer\\{input file path}_{file extension}\\'
+     * The output path Default value is 'viewer\\{input file path}_{file extension}\\'
      */
     public outputPath: string;
     
@@ -1394,7 +2207,6 @@ export namespace ViewOptions {
         HTML = 'HTML' as any,
         PNG = 'PNG' as any,
         JPG = 'JPG' as any,
-        BMP = 'BMP' as any,
         PDF = 'PDF' as any,
     }
 }
@@ -1474,7 +2286,7 @@ export class Watermark {
         {
             name: "position",
             baseName: "position",
-            type: "string",
+            type: "Watermark.PositionEnum",
         },        
         {
             name: "size",
@@ -1500,9 +2312,9 @@ export class Watermark {
     public color: string;
     
     /**
-     * Watermark position. Supported positions {Diagonal|TopLeft|TopCenter|TopRight|BottomLeft|BottomCenter|BottomRight}. Default value is \"Diagonal\".
+     * Watermark position. Default value is \"Diagonal\".
      */
-    public position: string;
+    public position: Watermark.PositionEnum;
     
     /**
      * Watermark size in percents. Default value is 100.
@@ -1510,6 +2322,53 @@ export class Watermark {
     public size: number;
     
     public constructor(init?: Partial<Watermark>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+// tslint:disable:quotemark
+// tslint:disable-next-line:no-namespace
+export namespace Watermark {
+    export enum PositionEnum {
+        Diagonal = 'Diagonal' as any,
+        TopLeft = 'TopLeft' as any,
+        TopCenter = 'TopCenter' as any,
+        TopRight = 'TopRight' as any,
+        BottomLeft = 'BottomLeft' as any,
+        BottomCenter = 'BottomCenter' as any,
+        BottomRight = 'BottomRight' as any,
+    }
+}
+// tslint:enable:quotemark
+/**
+ * Provides options for rendering word processing documents
+ */
+export class WordProcessingOptions {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "renderTrackedChanges",
+            baseName: "renderTrackedChanges",
+            type: "boolean",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return WordProcessingOptions.attributeTypeMap;
+    }
+
+    /**
+     * Enables tracked changes (revisions) rendering
+     */
+    public renderTrackedChanges: boolean;
+    
+    public constructor(init?: Partial<WordProcessingOptions>) {
         
         Object.assign(this, init);
     }        
@@ -1543,6 +2402,30 @@ export class AttachmentView extends Resource {
     public name: string;
     
     public constructor(init?: Partial<AttachmentView>) {
+        super(init);
+        Object.assign(this, init);
+    }        
+}
+
+/**
+ * Represents relatively positioned rectangle which contains single character
+ */
+export class Character extends TextElement {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return super.getAttributeTypeMap().concat(Character.attributeTypeMap);
+    }
+
+    public constructor(init?: Partial<Character>) {
         super(init);
         Object.assign(this, init);
     }        
@@ -1614,6 +2497,21 @@ export class HtmlOptions extends RenderOptions {
             name: "isResponsive",
             baseName: "isResponsive",
             type: "boolean",
+        },        
+        {
+            name: "minify",
+            baseName: "minify",
+            type: "boolean",
+        },        
+        {
+            name: "excludeFonts",
+            baseName: "excludeFonts",
+            type: "boolean",
+        },        
+        {
+            name: "fontsToExclude",
+            baseName: "fontsToExclude",
+            type: "Array<string>",
         }    ];
 
     /**
@@ -1637,6 +2535,21 @@ export class HtmlOptions extends RenderOptions {
      * Indicates whether rendering will provide responsive web pages, that look well on different device types. Default value is false.
      */
     public isResponsive: boolean;
+    
+    /**
+     * Enables HTML content and HTML resources minification
+     */
+    public minify: boolean;
+    
+    /**
+     * When enabled prevents adding any fonts into HTML document             
+     */
+    public excludeFonts: boolean;
+    
+    /**
+     * This option is supported for presentations only. The list of font names, to exclude from HTML document             
+     */
+    public fontsToExclude: Array<string>;
     
     public constructor(init?: Partial<HtmlOptions>) {
         super(init);
@@ -1741,6 +2654,39 @@ export class ImageOptions extends RenderOptions {
 }
 
 /**
+ * Represents relatively positioned rectangle which contains single line
+ */
+export class Line extends TextElement {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "words",
+            baseName: "words",
+            type: "Array<Word>",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return super.getAttributeTypeMap().concat(Line.attributeTypeMap);
+    }
+
+    /**
+     * The words contained by the line
+     */
+    public words: Array<Word>;
+    
+    public constructor(init?: Partial<Line>) {
+        super(init);
+        Object.assign(this, init);
+    }        
+}
+
+/**
  * Page information
  */
 export class PageView extends Resource {
@@ -1783,13 +2729,132 @@ export class PageView extends Resource {
     }        
 }
 
+/**
+ * Options for rendering document into PDF
+ */
+export class PdfOptions extends RenderOptions {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "jpgQuality",
+            baseName: "jpgQuality",
+            type: "number",
+        },        
+        {
+            name: "documentOpenPassword",
+            baseName: "documentOpenPassword",
+            type: "string",
+        },        
+        {
+            name: "permissionsPassword",
+            baseName: "permissionsPassword",
+            type: "string",
+        },        
+        {
+            name: "permissions",
+            baseName: "permissions",
+            type: "PdfOptions.PermissionsEnum",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return super.getAttributeTypeMap().concat(PdfOptions.attributeTypeMap);
+    }
+
+    /**
+     * The quality of the JPG images contained by output PDF document; Valid values are between 1 and 100; Default value is 90
+     */
+    public jpgQuality: number;
+    
+    /**
+     * The password required to open the PDF document
+     */
+    public documentOpenPassword: string;
+    
+    /**
+     * The password required to change permission settings; Using a permissions password  you can restrict printing, modification and data extraction
+     */
+    public permissionsPassword: string;
+    
+    /**
+     * The PDF document permissions such as printing, modification and data extraction
+     */
+    public permissions: PdfOptions.PermissionsEnum;
+    
+    public constructor(init?: Partial<PdfOptions>) {
+        super(init);
+        Object.assign(this, init);
+    }        
+}
+
+// tslint:disable:quotemark
+// tslint:disable-next-line:no-namespace
+export namespace PdfOptions {
+    export enum PermissionsEnum {
+        AllowAll = 'AllowAll' as any,
+        DenyPrinting = 'DenyPrinting' as any,
+        DenyModification = 'DenyModification' as any,
+        DenyDataExtraction = 'DenyDataExtraction' as any,
+        DenyAll = 'DenyAll' as any,
+    }
+}
+// tslint:enable:quotemark
+/**
+ * Represents relatively positioned rectangle which contains single word
+ */
+export class Word extends TextElement {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "characters",
+            baseName: "characters",
+            type: "Array<Character>",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return super.getAttributeTypeMap().concat(Word.attributeTypeMap);
+    }
+
+    /**
+     * The characters contained by the word
+     */
+    public characters: Array<Character>;
+    
+    public constructor(init?: Partial<Word>) {
+        super(init);
+        Object.assign(this, init);
+    }        
+}
+
 const enumsMap = {
+    "EmailOptions.PageSizeEnum": EmailOptions.PageSizeEnum,
+    "PageRotation.RotationAngleEnum": PageRotation.RotationAngleEnum,
+    "PdfDocumentOptions.ImageQualityEnum": PdfDocumentOptions.ImageQualityEnum,
+    "ProjectManagementOptions.PageSizeEnum": ProjectManagementOptions.PageSizeEnum,
+    "ProjectManagementOptions.TimeUnitEnum": ProjectManagementOptions.TimeUnitEnum,
+    "SpreadsheetOptions.TextOverflowModeEnum": SpreadsheetOptions.TextOverflowModeEnum,
     "ViewOptions.ViewFormatEnum": ViewOptions.ViewFormatEnum,
+    "Watermark.PositionEnum": Watermark.PositionEnum,
+    "PdfOptions.PermissionsEnum": PdfOptions.PermissionsEnum,
 };
 
 const typeMap = {
+            ArchiveOptions,
+            ArchiveViewInfo,
             AttachmentInfo,
             CadOptions,
+            CadViewInfo,
             DeleteViewOptions,
             DiscUsage,
             EmailOptions,
@@ -1802,25 +2867,39 @@ const typeMap = {
             Format,
             FormatsResult,
             InfoResult,
+            Layer,
+            Layout,
             ModelError,
             ObjectExist,
+            OutlookOptions,
+            OutlookViewInfo,
             PageInfo,
+            PageRotation,
+            PdfDocumentOptions,
+            PdfViewInfo,
             ProjectManagementOptions,
+            ProjectManagementViewInfo,
             RenderOptions,
             Resource,
-            Row,
             SpreadsheetOptions,
             StorageExist,
             StorageFile,
+            TextElement,
+            Tile,
             ViewOptions,
             ViewResult,
             Watermark,
+            WordProcessingOptions,
             AttachmentView,
+            Character,
             FileVersion,
             HtmlOptions,
             HtmlResource,
             ImageOptions,
+            Line,
             PageView,
+            PdfOptions,
+            Word,
 };
 
 export {enumsMap, typeMap};

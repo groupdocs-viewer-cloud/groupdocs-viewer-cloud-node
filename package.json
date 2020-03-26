@@ -1,6 +1,6 @@
 {
   "name": "groupdocs-viewer-cloud",
-  "version": "19.5.0",
+  "version": "20.3.0",
   "description": "GroupDocs.Viewer Cloud SDK for Node.js",
   "homepage": "https://products.groupdocs.cloud/viewer",
   "author": {
@@ -31,19 +31,19 @@
     "build:package": "npm pack"
   },
   "dependencies": {
-    "request": "^2.81.0",
-    "request-debug": "^0.2.0",
-    "@types/request": "*"
+    "@types/request": "^2.48.4",
+    "request": "^2.88.2",
+    "request-debug": "^0.2.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.0.10",
+    "@types/chai": "^4.2.9",
     "@types/mocha": "^2.2.44",
-    "@types/node": "^10.10.1",
+    "@types/node": "^10.17.15",
     "asposestoragecloud": "^1.0.5",
-    "mocha": "^4.0.1",
-    "chai": "^4.1.2",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.8.0",
-    "typescript": "^3.0.3"
+    "chai": "^4.2.0",
+    "mocha": "^7.0.1",
+    "ts-node": "^8.6.2",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.5"
   }
 }
