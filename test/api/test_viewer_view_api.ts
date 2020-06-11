@@ -193,7 +193,7 @@ describe("viewer_create_view_api", () => {
             const request = new CreateViewRequest(viewOptions);
             return TestContext.getViewerApi().createView(request)
                      .then((result) => {                         
-                         expect(result.pages.length).equal(1);
+                         expect(result.pages.length).greaterThan(0);
                      });
         });
 

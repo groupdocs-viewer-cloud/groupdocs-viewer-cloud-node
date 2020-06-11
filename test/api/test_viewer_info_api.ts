@@ -96,7 +96,6 @@ describe("viewer_get_info_api", () => {
                      .then((result) => {                         
                          expect(result.pages.length).equal(1);
                          expect(result.pages[0].number).equal(1);
-                         expect(result.pages[0].width).equal(0);
                          expect(result.attachments.length).equal(0);
                      });
         });
@@ -190,7 +189,7 @@ describe("viewer_get_info_api", () => {
             const request = new GetInfoRequest(viewOptions);
             return TestContext.getInfoApi().getInfo(request)
                      .then((result) => {                         
-                         expect(result.pages.length).equal(1);
+                         expect(result.pages.length).greaterThan(0);
                      });
         });
  
