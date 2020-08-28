@@ -11,7 +11,7 @@ npm install groupdocs-viewer-cloud
 
 ## Getting Started
 
-Please follow the [installation](#installation) procedure and then run the following JavaScript code:
+Please follow the aforementioned installation procedure and then run the following JavaScript code:
 
 ```js
 // load the module
@@ -67,12 +67,4 @@ infoApi.getSupportedFileFormats()
 ## Licensing
 GroupDocs.Viewer Cloud Node.js SDK licensed under [MIT License](LICENSE).
 
-## Resources
-+ [**Website**](https://www.groupdocs.cloud)
-+ [**Product Home**](https://products.groupdocs.cloud/viewer)
-+ [**Documentation**](https://docs.groupdocs.cloud/display/viewercloud/Home)
-+ [**Free Support Forum**](https://forum.groupdocs.cloud/c/viewer)
-+ [**Blog**](https://blog.groupdocs.cloud/category/viewer)
-
-## Contact Us
-Your feedback is very important to us. Please feel free to contact us using our [Support Forums](https://forum.groupdocs.cloud/c/viewer).
+[Home](https://www.groupdocs.cloud/) | [Product Page](https://products.groupdocs.cloud/viewer/nodejs) | [Docs](https://docs.groupdocs.cloud/viewer/) | [Demos](https://products.groupdocs.app/viewer/family) | [API Reference](https://apireference.groupdocs.cloud/viewer/) | [Examples](https://github.com/groupdocs-viewer-cloud/groupdocs-viewer-cloud-node) | [Blog](https://blog.groupdocs.cloud/category/viewer/) | [Free Support](https://forum.groupdocs.cloud/c/viewer) | [Free Trial](https://purchase.groupdocs.cloud/trial)
