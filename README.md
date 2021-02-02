@@ -58,12 +58,13 @@ npm install groupdocs-viewer-cloud
 // load the module
 var GroupDocs = require('groupdocs-viewer-cloud');
 
-// get your appSid and appKey at https://dashboard.groupdocs.cloud (free registration is required).
-var appSid = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX";
-var appKey = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+// Get Client Id and Client Secret from https://dashboard.groupdocs.cloud
+var myClientId = "";
+var myClientSecret = "";
 
-// construct ViewerApi
-var infoApi = GroupDocs.InfoApi.fromKeys(appSid, appKey);
+// Create instance of the API
+var configuration = new GroupDocs.Configuration(myClientId, myClientSecret);
+var infoApi = GroupDocs.InfoApi.fromConfig(configuration);
 
 // retrieve supported file-formats
 infoApi.getSupportedFileFormats()
@@ -82,14 +83,15 @@ Or compile and run same written in TypeScript:
 
 ```ts
 // load the module
-import { InfoApi } from "groupdocs-viewer-cloud";
+import { InfoApi, Configuration } from "groupdocs-viewer-cloud";
 
-// get your appSid and appKey at https://dashboard.groupdocs.cloud (free registration is required).
-const appSid: string = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX";
-const appKey: string = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+// Get Client Id and Client Secret from https://dashboard.groupdocs.cloud
+const myClientId: string = "";
+const myClientSecret: string = "";
 
-// construct ViewerApi
-const infoApi: InfoApi = InfoApi.fromKeys(appSid, appKey);
+// Create instance of the API
+const configuration: Configuration = Configuration(myClientId, myClientSecret);
+const infoApi: InfoApi = InfoApi.fromConfig(configuration);
 
 // retrieve supported file-formats
 infoApi.getSupportedFileFormats()
