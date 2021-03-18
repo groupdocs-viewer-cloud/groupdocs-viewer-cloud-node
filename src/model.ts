@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2020 Aspose Pty Ltd
+* Copyright (c) 2003-2021 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -2756,7 +2756,7 @@ export class PdfOptions extends RenderOptions {
         {
             name: "permissions",
             baseName: "permissions",
-            type: "PdfOptions.PermissionsEnum",
+            type: "Array<string>",
         }    ];
 
     /**
@@ -2782,9 +2782,9 @@ export class PdfOptions extends RenderOptions {
     public permissionsPassword: string;
     
     /**
-     * The PDF document permissions such as printing, modification and data extraction
+     * The array of PDF document permissions. Allowed values are: AllowAll, DenyPrinting, DenyModification, DenyDataExtraction, DenyAll Default value is AllowAll, if now permissions are set.
      */
-    public permissions: PdfOptions.PermissionsEnum;
+    public permissions: Array<string>;
     
     public constructor(init?: Partial<PdfOptions>) {
         super(init);
@@ -2792,18 +2792,6 @@ export class PdfOptions extends RenderOptions {
     }        
 }
 
-// tslint:disable:quotemark
-// tslint:disable-next-line:no-namespace
-export namespace PdfOptions {
-    export enum PermissionsEnum {
-        AllowAll = 'AllowAll' as any,
-        DenyPrinting = 'DenyPrinting' as any,
-        DenyModification = 'DenyModification' as any,
-        DenyDataExtraction = 'DenyDataExtraction' as any,
-        DenyAll = 'DenyAll' as any,
-    }
-}
-// tslint:enable:quotemark
 /**
  * Represents relatively positioned rectangle which contains single word
  */
@@ -2846,7 +2834,6 @@ const enumsMap = {
     "SpreadsheetOptions.TextOverflowModeEnum": SpreadsheetOptions.TextOverflowModeEnum,
     "ViewOptions.ViewFormatEnum": ViewOptions.ViewFormatEnum,
     "Watermark.PositionEnum": Watermark.PositionEnum,
-    "PdfOptions.PermissionsEnum": PdfOptions.PermissionsEnum,
 };
 
 const typeMap = {

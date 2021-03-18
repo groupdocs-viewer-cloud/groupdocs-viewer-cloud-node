@@ -104,6 +104,12 @@ async function invokeApiMethodInternal(requestOptions: request.Options, config: 
                             } else {
                                 reject({ message: bodyContent.error, code: response.statusCode });
                             }
+                        } else {
+                            if (bodyContent.message) {
+                                reject({ message: bodyContent.message, code: bodyContent.code });
+                            } else {
+                                reject({ message: bodyContent, code: response.statusCode });
+                            }                            
                         }
                     } catch (error) {
                         reject({ message: "Error while parse server error: " + error });
