@@ -35,6 +35,16 @@ export class ArchiveOptions {
             name: "folder",
             baseName: "folder",
             type: "string",
+        },        
+        {
+            name: "fileName",
+            baseName: "fileName",
+            type: "string",
+        },        
+        {
+            name: "itemsPerPage",
+            baseName: "itemsPerPage",
+            type: "number",
         }    ];
 
     /**
@@ -48,6 +58,16 @@ export class ArchiveOptions {
      * The folder inside the archive to be rendered
      */
     public folder: string;
+    
+    /**
+     * The filename to display in the header. By default the name of the source file is displayed.
+     */
+    public fileName: string;
+    
+    /**
+     * Number of records per page (for rendering to HTML only)             
+     */
+    public itemsPerPage: number;
     
     public constructor(init?: Partial<ArchiveOptions>) {
         
@@ -361,6 +381,16 @@ export class EmailOptions {
             name: "fieldLabels",
             baseName: "fieldLabels",
             type: "Array<FieldLabel>",
+        },        
+        {
+            name: "dateTimeFormat",
+            baseName: "dateTimeFormat",
+            type: "string",
+        },        
+        {
+            name: "timeZoneOffset",
+            baseName: "timeZoneOffset",
+            type: "string",
         }    ];
 
     /**
@@ -379,6 +409,16 @@ export class EmailOptions {
      * The list of supported email message field labels: 1. Field: \"Anniversary\" - default label is \"Anniversary\". 2. Field: \"Attachments\" - default label is \"Attachments\". 3. Field: \"Bcc\" - default label is \"Bcc\". 4. Field: \"Birthday\" - default label is \"Birthday\". 5. Field: \"Business\" - default label is \"Business\". 6. Field: \"BusinessAddress\" - default label is \"Business Address\". 7. Field: \"BusinessFax\" - default label is \"Business Fax\". 8. Field: \"BusinessHomepage\" - default label is \"BusinessHomePage\". 9. Field: \"Cc\" - default label is \"Cc\". 10. Field: \"Company\" - default label is \"Company\". 11. Field: \"Department\" - default label is \"Department\". 12. Field: \"Email\" - default label is \"Email\". 13. Field: \"EmailDisplayAs\" - default label is \"Email Display As\". 14. Field: \"Email2\" - default label is \"Email2\". 15. Field: \"Email2DisplayAs\" - default label is \"Email2 Display As\". 16. Field: \"Email3\" - default label is \"Email3\". 17. Field: \"Email3DisplayAs\" - default label is \"Email3 Display As\". 18. Field: \"End\" - default label is \"End\". 19. Field: \"FirstName\" - default label is \"First Name\". 20. Field: \"From\" - default label is \"From\". 21. Field: \"FullName\" - default label is \"Full Name\". 22. Field: \"Gender\" - default label is \"Gender\". 23. Field: \"Hobbies\" - default label is \"Hobbies\". 24. Field: \"Home\" - default label is \"Home\". 25. Field: \"HomeAddress\" - default label is \"Home Address\". 26. Field: \"Importance\" - default label is \"Importance\". 27. Field: \"JobTitle\" - default label is \"Job Title\". 28. Field: \"LastName\" - default label is \"Last Name\". 29. Field: \"Location\" - default label is \"Location\". 30. Field: \"MiddleName\" - default label is \"Middle Name\". 31. Field: \"Mobile\" - default label is \"Mobile\". 32. Field: \"Organizer\" - default label is \"Organizer\". 33. Field: \"OtherAddress\" - default label is \"Other Address\". 34. Field: \"PersonalHomepage\" - default label is \"PersonalHomePage\". 35. Field: \"Profession\" - default label is \"Profession\". 36. Field: \"Recurrence\" - default label is \"Recurrence\". 37. Field: \"RecurrencePattern\" - default label is \"Recurrence Pattern\". 38. Field: \"RequiredAttendees\" - default label is \"Required Attendees\". 39. Field: \"Sent\" - default label is \"Sent\". 40. Field: \"ShowTimeAs\" - default label is \"Show Time As\". 41. Field: \"SpousePartner\" - default label is \"Spouse/Partner\". 42. Field: \"Start\" - default label is \"Start\". 43. Field: \"Subject\" - default label is \"Subject\". 44. Field: \"To\" - default label is \"To\". 45. Field: \"UserField1\" - default label is \"User Field 1\". 46. Field: \"UserField2\" - default label is \"User Field 2\". 47. Field: \"UserField3\" - default label is \"User Field 3\". 48. Field: \"UserField4\" - default label is \"User Field 4\".
      */
     public fieldLabels: Array<FieldLabel>;
+    
+    /**
+     * Time Format (can be include TimeZone) for example: 'MM d yyyy HH:mm tt', if not set - current system format is used
+     */
+    public dateTimeFormat: string;
+    
+    /**
+     * Message time zone offset. Format should be compatible with .net TimeSpan
+     */
+    public timeZoneOffset: string;
     
     public constructor(init?: Partial<EmailOptions>) {
         
@@ -945,6 +985,59 @@ export class Layout {
 }
 
 /**
+ * Provides options for rendering Mail storage (Lotus Notes, MBox) data files.
+ */
+export class MailStorageOptions {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "textFilter",
+            baseName: "textFilter",
+            type: "string",
+        },        
+        {
+            name: "addressFilter",
+            baseName: "addressFilter",
+            type: "string",
+        },        
+        {
+            name: "maxItems",
+            baseName: "maxItems",
+            type: "number",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return MailStorageOptions.attributeTypeMap;
+    }
+
+    /**
+     * The keywords used to filter messages.
+     */
+    public textFilter: string;
+    
+    /**
+     * The email-address used to filter messages by sender or recipient.
+     */
+    public addressFilter: string;
+    
+    /**
+     * The maximum number of messages or items for render. Default value is 0 - all messages will be rendered
+     */
+    public maxItems: number;
+    
+    public constructor(init?: Partial<MailStorageOptions>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
  * Error
  */
 export class ModelError {
@@ -1305,6 +1398,11 @@ export class PdfDocumentOptions {
             name: "imageQuality",
             baseName: "imageQuality",
             type: "PdfDocumentOptions.ImageQualityEnum",
+        },        
+        {
+            name: "renderTextAsImage",
+            baseName: "renderTextAsImage",
+            type: "boolean",
         }    ];
 
     /**
@@ -1338,6 +1436,11 @@ export class PdfDocumentOptions {
      * Specifies output image quality for image resources when rendering into HTML. The default value is Low
      */
     public imageQuality: PdfDocumentOptions.ImageQualityEnum;
+    
+    /**
+     * When this option is set to true, the text is rendered as an image in the output HTML. Enable this option to make text unselectable or to fix characters rendering and make HTML look like PDF. The default value is false. This option is supported when rendering into HTML.
+     */
+    public renderTextAsImage: boolean;
     
     public constructor(init?: Partial<PdfDocumentOptions>) {
         
@@ -1608,6 +1711,21 @@ export class RenderOptions {
             name: "archiveOptions",
             baseName: "archiveOptions",
             type: "ArchiveOptions",
+        },        
+        {
+            name: "textOptions",
+            baseName: "textOptions",
+            type: "TextOptions",
+        },        
+        {
+            name: "mailStorageOptions",
+            baseName: "mailStorageOptions",
+            type: "MailStorageOptions",
+        },        
+        {
+            name: "visioRenderingOptions",
+            baseName: "visioRenderingOptions",
+            type: "VisioRenderingOptions",
         }    ];
 
     /**
@@ -1702,6 +1820,21 @@ export class RenderOptions {
      */
     public archiveOptions: ArchiveOptions;
     
+    /**
+     * Rendering options for Text source file formats
+     */
+    public textOptions: TextOptions;
+    
+    /**
+     * Rendering options for Mail storage (Lotus Notes, MBox) data files.
+     */
+    public mailStorageOptions: MailStorageOptions;
+    
+    /**
+     * Rendering options for Visio source file formats
+     */
+    public visioRenderingOptions: VisioRenderingOptions;
+    
     public constructor(init?: Partial<RenderOptions>) {
         
         Object.assign(this, init);
@@ -1771,6 +1904,11 @@ export class SpreadsheetOptions {
             type: "number",
         },        
         {
+            name: "countColumnsPerPage",
+            baseName: "countColumnsPerPage",
+            type: "number",
+        },        
+        {
             name: "renderGridLines",
             baseName: "renderGridLines",
             type: "boolean",
@@ -1793,6 +1931,11 @@ export class SpreadsheetOptions {
         {
             name: "renderHiddenColumns",
             baseName: "renderHiddenColumns",
+            type: "boolean",
+        },        
+        {
+            name: "renderHeadings",
+            baseName: "renderHeadings",
             type: "boolean",
         },        
         {
@@ -1824,6 +1967,11 @@ export class SpreadsheetOptions {
     public countRowsPerPage: number;
     
     /**
+     * The columns count to include into each page when splitting worksheet into pages.
+     */
+    public countColumnsPerPage: number;
+    
+    /**
      * Indicates whether to render grid lines
      */
     public renderGridLines: boolean;
@@ -1847,6 +1995,11 @@ export class SpreadsheetOptions {
      * Enables rendering of hidden columns.
      */
     public renderHiddenColumns: boolean;
+    
+    /**
+     * Enables headings rendering.
+     */
+    public renderHeadings: boolean;
     
     /**
      * Enables rendering worksheet(s) sections which is defined as print area. Renders each print area in a worksheet as a separate page.
@@ -2049,6 +2202,49 @@ export class TextElement {
     public value: string;
     
     public constructor(init?: Partial<TextElement>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
+ * Provides options for rendering text documents
+ */
+export class TextOptions {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "maxCharsPerRow",
+            baseName: "maxCharsPerRow",
+            type: "number",
+        },        
+        {
+            name: "maxRowsPerPage",
+            baseName: "maxRowsPerPage",
+            type: "number",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return TextOptions.attributeTypeMap;
+    }
+
+    /**
+     * Max chars per row on page. Default value is 85.
+     */
+    public maxCharsPerRow: number;
+    
+    /**
+     * Max rows per page. Default value is 55.
+     */
+    public maxRowsPerPage: number;
+    
+    public constructor(init?: Partial<TextOptions>) {
         
         Object.assign(this, init);
     }        
@@ -2265,6 +2461,49 @@ export class ViewResult {
 }
 
 /**
+ * The Visio files processing documents view options.
+ */
+export class VisioRenderingOptions {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "renderFiguresOnly",
+            baseName: "renderFiguresOnly",
+            type: "boolean",
+        },        
+        {
+            name: "figureWidth",
+            baseName: "figureWidth",
+            type: "number",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return VisioRenderingOptions.attributeTypeMap;
+    }
+
+    /**
+     * Render only Visio figures, not a diagram.
+     */
+    public renderFiguresOnly: boolean;
+    
+    /**
+     * Figure width, height will be calculated automatically. Default value is 100.
+     */
+    public figureWidth: number;
+    
+    public constructor(init?: Partial<VisioRenderingOptions>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
  * Text watermark
  */
 export class Watermark {
@@ -2354,6 +2593,26 @@ export class WordProcessingOptions {
             name: "renderTrackedChanges",
             baseName: "renderTrackedChanges",
             type: "boolean",
+        },        
+        {
+            name: "leftMargin",
+            baseName: "leftMargin",
+            type: "number",
+        },        
+        {
+            name: "rightMargin",
+            baseName: "rightMargin",
+            type: "number",
+        },        
+        {
+            name: "topMargin",
+            baseName: "topMargin",
+            type: "number",
+        },        
+        {
+            name: "bottomMargin",
+            baseName: "bottomMargin",
+            type: "number",
         }    ];
 
     /**
@@ -2367,6 +2626,26 @@ export class WordProcessingOptions {
      * Enables tracked changes (revisions) rendering
      */
     public renderTrackedChanges: boolean;
+    
+    /**
+     * Left page margin (for HTML rendering only)
+     */
+    public leftMargin: number;
+    
+    /**
+     * Right page margin (for HTML rendering only)
+     */
+    public rightMargin: number;
+    
+    /**
+     * Top page margin (for HTML rendering only)
+     */
+    public topMargin: number;
+    
+    /**
+     * Bottom page margin (for HTML rendering only)
+     */
+    public bottomMargin: number;
     
     public constructor(init?: Partial<WordProcessingOptions>) {
         
@@ -2512,6 +2791,36 @@ export class HtmlOptions extends RenderOptions {
             name: "fontsToExclude",
             baseName: "fontsToExclude",
             type: "Array<string>",
+        },        
+        {
+            name: "forPrinting",
+            baseName: "forPrinting",
+            type: "boolean",
+        },        
+        {
+            name: "imageHeight",
+            baseName: "imageHeight",
+            type: "number",
+        },        
+        {
+            name: "imageWidth",
+            baseName: "imageWidth",
+            type: "number",
+        },        
+        {
+            name: "imageMaxHeight",
+            baseName: "imageMaxHeight",
+            type: "number",
+        },        
+        {
+            name: "imageMaxWidth",
+            baseName: "imageMaxWidth",
+            type: "number",
+        },        
+        {
+            name: "renderToSinglePage",
+            baseName: "renderToSinglePage",
+            type: "boolean",
         }    ];
 
     /**
@@ -2550,6 +2859,36 @@ export class HtmlOptions extends RenderOptions {
      * This option is supported for presentations only. The list of font names, to exclude from HTML document             
      */
     public fontsToExclude: Array<string>;
+    
+    /**
+     * Indicates whether to optimize output HTML for printing.
+     */
+    public forPrinting: boolean;
+    
+    /**
+     * The height of an output image in pixels. (When converting single image to HTML only)
+     */
+    public imageHeight: number;
+    
+    /**
+     * The width of the output image in pixels. (When converting single image to HTML only)
+     */
+    public imageWidth: number;
+    
+    /**
+     * Max height of an output image in pixels. (When converting single image to HTML only)
+     */
+    public imageMaxHeight: number;
+    
+    /**
+     * Max width of an output image in pixels. (When converting single image to HTML only)
+     */
+    public imageMaxWidth: number;
+    
+    /**
+     * Enables HTML content will be rendered to single page
+     */
+    public renderToSinglePage: boolean;
     
     public constructor(init?: Partial<HtmlOptions>) {
         super(init);
@@ -2618,6 +2957,16 @@ export class ImageOptions extends RenderOptions {
             name: "jpegQuality",
             baseName: "jpegQuality",
             type: "number",
+        },        
+        {
+            name: "maxWidth",
+            baseName: "maxWidth",
+            type: "number",
+        },        
+        {
+            name: "maxHeight",
+            baseName: "maxHeight",
+            type: "number",
         }    ];
 
     /**
@@ -2646,6 +2995,16 @@ export class ImageOptions extends RenderOptions {
      * Allows to specify quality when rendering as JPG. Valid values are between 1 and 100.  Default value is 90.
      */
     public jpegQuality: number;
+    
+    /**
+     * Max width of an output image in pixels
+     */
+    public maxWidth: number;
+    
+    /**
+     * Max height of an output image in pixels
+     */
+    public maxHeight: number;
     
     public constructor(init?: Partial<ImageOptions>) {
         super(init);
@@ -2757,6 +3116,26 @@ export class PdfOptions extends RenderOptions {
             name: "permissions",
             baseName: "permissions",
             type: "Array<string>",
+        },        
+        {
+            name: "imageMaxWidth",
+            baseName: "imageMaxWidth",
+            type: "number",
+        },        
+        {
+            name: "imageMaxHeight",
+            baseName: "imageMaxHeight",
+            type: "number",
+        },        
+        {
+            name: "imageWidth",
+            baseName: "imageWidth",
+            type: "number",
+        },        
+        {
+            name: "imageHeight",
+            baseName: "imageHeight",
+            type: "number",
         }    ];
 
     /**
@@ -2785,6 +3164,26 @@ export class PdfOptions extends RenderOptions {
      * The array of PDF document permissions. Allowed values are: AllowAll, DenyPrinting, DenyModification, DenyDataExtraction, DenyAll Default value is AllowAll, if now permissions are set.
      */
     public permissions: Array<string>;
+    
+    /**
+     * Max width of an output image in pixels. (When converting single image to HTML only)
+     */
+    public imageMaxWidth: number;
+    
+    /**
+     * Max height of an output image in pixels. (When converting single image to HTML only)
+     */
+    public imageMaxHeight: number;
+    
+    /**
+     * The width of the output image in pixels. (When converting single image to HTML only)
+     */
+    public imageWidth: number;
+    
+    /**
+     * The height of an output image in pixels. (When converting single image to HTML only)
+     */
+    public imageHeight: number;
     
     public constructor(init?: Partial<PdfOptions>) {
         super(init);
@@ -2856,6 +3255,7 @@ const typeMap = {
             InfoResult,
             Layer,
             Layout,
+            MailStorageOptions,
             ModelError,
             ObjectExist,
             OutlookOptions,
@@ -2872,9 +3272,11 @@ const typeMap = {
             StorageExist,
             StorageFile,
             TextElement,
+            TextOptions,
             Tile,
             ViewOptions,
             ViewResult,
+            VisioRenderingOptions,
             Watermark,
             WordProcessingOptions,
             AttachmentView,

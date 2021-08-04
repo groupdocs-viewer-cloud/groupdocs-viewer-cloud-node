@@ -25,4 +25,4 @@
 /**
  * Package version
  */
-export const PackageVersion: string = "21.3.0";
+export const PackageVersion: string = "21.8.0";
