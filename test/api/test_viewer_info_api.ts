@@ -64,6 +64,16 @@ describe("viewer_get_info_api", () => {
             });
         });        
 
+        it("TestGetInfoPasswordProtected", () => {  
+            const viewOptions = new ViewOptions();
+            viewOptions.fileInfo = TestFile.PasswordProtectedDocx.ToFileInfo();
+            viewOptions.fileInfo.password = null;
+            const request = new GetInfoRequest(viewOptions);
+            return TestContext.getInfoApi().getInfo(request).catch((error) => {
+                expect(error.message).equal("Please specify password to load the document.");
+            });
+        });  
+
         it("TestGetInfoWithMinimalViewOptions", () => {  
             const viewOptions = new ViewOptions();
             viewOptions.fileInfo = TestFile.PasswordProtectedDocx.ToFileInfo();
