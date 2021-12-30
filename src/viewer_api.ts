@@ -547,6 +547,63 @@ export class InfoApi {
 /**
  * GroupDocs.Viewer Cloud API 
  */
+export class LicenseApi {
+    
+    /**
+     * Creates new instance of LicenseApi
+     * @param appSid Application identifier (App SID).
+     * @param appKey Application private key (App Key).
+     */
+    public static fromKeys(appSid: string, appKey: string) {
+        const config = new Configuration(appSid, appKey);
+        return new LicenseApi(config);
+    }
+
+    /**
+     * Creates new instance of LicenseApi
+     * @param config API configuration.
+     */
+    public static fromConfig(config: Configuration) {
+        return new LicenseApi(config);
+    }
+
+    /**
+     * Configuration
+     */
+    private configuration: Configuration;
+
+    /**
+     * @param config Configuration.
+     */
+    private constructor(config: Configuration) {
+        this.configuration = config;
+    }
+
+    /**
+     * Get license consumption
+     * @param requestObj contains request parameters
+     */
+    public async getConsumptionCredit(): Promise<model.ConsumptionResult> {
+
+        const localVarPath = this.configuration.getServerUrl() + "/viewer/consumption";
+        const queryParameters: any = {};
+        
+        const requestOptions: request.Options = {
+            method: "GET",
+            qs: queryParameters,
+            uri: localVarPath,
+            json: true,
+        };
+
+        const response = await invokeApiMethod(requestOptions, this.configuration);
+        const result =  Serializer.deserialize(response.body, "ConsumptionResult");
+        return Promise.resolve(result);
+    }
+
+}
+/**
+ * GroupDocs.Viewer Cloud API 
+ */
 export class StorageApi {
     
     /**

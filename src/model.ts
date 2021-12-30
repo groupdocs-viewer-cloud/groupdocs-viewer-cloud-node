@@ -278,6 +278,49 @@ export class CadViewInfo {
 }
 
 /**
+ * Metered license consumption information
+ */
+export class ConsumptionResult {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "credit",
+            baseName: "credit",
+            type: "number",
+        },        
+        {
+            name: "quantity",
+            baseName: "quantity",
+            type: "number",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return ConsumptionResult.attributeTypeMap;
+    }
+
+    /**
+     * Amount of used credits
+     */
+    public credit: number;
+    
+    /**
+     * Amount of MBs processed
+     */
+    public quantity: number;
+    
+    public constructor(init?: Partial<ConsumptionResult>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+/**
  * Delete view options
  */
 export class DeleteViewOptions {
@@ -3241,6 +3284,7 @@ const typeMap = {
             AttachmentInfo,
             CadOptions,
             CadViewInfo,
+            ConsumptionResult,
             DeleteViewOptions,
             DiscUsage,
             EmailOptions,
