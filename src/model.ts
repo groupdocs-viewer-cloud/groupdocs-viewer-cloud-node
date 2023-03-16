@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2021 Aspose Pty Ltd
+* Copyright (c) 2003-2023 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -1701,6 +1701,11 @@ export class RenderOptions {
             type: "string",
         },        
         {
+            name: "detectEncoding",
+            baseName: "detectEncoding",
+            type: "boolean",
+        },        
+        {
             name: "renderComments",
             baseName: "renderComments",
             type: "boolean",
@@ -1769,6 +1774,11 @@ export class RenderOptions {
             name: "visioRenderingOptions",
             baseName: "visioRenderingOptions",
             type: "VisioRenderingOptions",
+        },        
+        {
+            name: "webDocumentOptions",
+            baseName: "webDocumentOptions",
+            type: "WebDocumentOptions",
         }    ];
 
     /**
@@ -1807,6 +1817,11 @@ export class RenderOptions {
      * Default encoding for the plain text files such as .csv, .txt and .eml files when encoding is not specified in header
      */
     public defaultEncoding: string;
+    
+    /**
+     * This option enables TXT, TSV, and CSV files encoding detection. In case the encoding can't be detected the DefaultEncoding is used.
+     */
+    public detectEncoding: boolean;
     
     /**
      * When enabled comments will be rendered to the output
@@ -1877,6 +1892,11 @@ export class RenderOptions {
      * Rendering options for Visio source file formats
      */
     public visioRenderingOptions: VisioRenderingOptions;
+    
+    /**
+     * This rendering options enables you to customize the appearance of the output HTML/PDF/PNG/JPEG when rendering Web documents.
+     */
+    public webDocumentOptions: WebDocumentOptions;
     
     public constructor(init?: Partial<RenderOptions>) {
         
@@ -2624,6 +2644,94 @@ export namespace Watermark {
 }
 // tslint:enable:quotemark
 /**
+ * This rendering options enables you to customize the appearance of the output HTML/PDF/PNG/JPEG when rendering Web documents.
+ */
+export class WebDocumentOptions {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "pageSize",
+            baseName: "pageSize",
+            type: "WebDocumentOptions.PageSizeEnum",
+        },        
+        {
+            name: "leftMargin",
+            baseName: "leftMargin",
+            type: "number",
+        },        
+        {
+            name: "rightMargin",
+            baseName: "rightMargin",
+            type: "number",
+        },        
+        {
+            name: "topMargin",
+            baseName: "topMargin",
+            type: "number",
+        },        
+        {
+            name: "bottomMargin",
+            baseName: "bottomMargin",
+            type: "number",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return WebDocumentOptions.attributeTypeMap;
+    }
+
+    /**
+     * The size of the output page. The default value is GroupDocs.Viewer.Options.PageSize.Letter 792 x 612 points. When contents does not fit set a larger page size e.g. GroupDocs.Viewer.Options.PageSize.A3.             
+     */
+    public pageSize: WebDocumentOptions.PageSizeEnum;
+    
+    /**
+     * The distance (in points) between the left edge of the page and the left boundary  of the body text. The default value is 5 points.
+     */
+    public leftMargin: number;
+    
+    /**
+     * The distance (in points) between the right edge of the page and the right boundary of the body text. The default value is 5 points.
+     */
+    public rightMargin: number;
+    
+    /**
+     * The distance (in points) between the top edge of the page and the top boundary of the body text. The default value is 72 points.
+     */
+    public topMargin: number;
+    
+    /**
+     * The distance (in points) between the bottom edge of the page and the bottom boundary of the body text. The default value is 72 points.
+     */
+    public bottomMargin: number;
+    
+    public constructor(init?: Partial<WebDocumentOptions>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+// tslint:disable:quotemark
+// tslint:disable-next-line:no-namespace
+export namespace WebDocumentOptions {
+    export enum PageSizeEnum {
+        Unspecified = 'Unspecified' as any,
+        Letter = 'Letter' as any,
+        Ledger = 'Ledger' as any,
+        A0 = 'A0' as any,
+        A1 = 'A1' as any,
+        A2 = 'A2' as any,
+        A3 = 'A3' as any,
+        A4 = 'A4' as any,
+    }
+}
+// tslint:enable:quotemark
+/**
  * Provides options for rendering word processing documents
  */
 export class WordProcessingOptions {
@@ -3276,6 +3384,7 @@ const enumsMap = {
     "SpreadsheetOptions.TextOverflowModeEnum": SpreadsheetOptions.TextOverflowModeEnum,
     "ViewOptions.ViewFormatEnum": ViewOptions.ViewFormatEnum,
     "Watermark.PositionEnum": Watermark.PositionEnum,
+    "WebDocumentOptions.PageSizeEnum": WebDocumentOptions.PageSizeEnum,
 };
 
 const typeMap = {
@@ -3322,6 +3431,7 @@ const typeMap = {
             ViewResult,
             VisioRenderingOptions,
             Watermark,
+            WebDocumentOptions,
             WordProcessingOptions,
             AttachmentView,
             Character,
