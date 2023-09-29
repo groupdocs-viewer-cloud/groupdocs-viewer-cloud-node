@@ -28,7 +28,8 @@
         "file-header": true,
         "only-arrow-functions": false,
         "object-literal-sort-keys": false,
-        "ordered-imports": false
+        "ordered-imports": false,
+        "no-shadowed-variable": false
     },
     "rulesDirectory": []
 }
