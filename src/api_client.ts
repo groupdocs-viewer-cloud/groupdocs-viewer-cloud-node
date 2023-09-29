@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2020 Aspose Pty Ltd
+* Copyright (c) 2003-2023 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,7 @@
 * SOFTWARE.
 */
 
-import request = require("request");
-import requestDebug = require("request-debug");
+import axios, { AxiosResponse, RawAxiosRequestConfig } from "axios";
 import { Configuration } from "./configuration";
 import { PackageVersion } from "./package_version";
 
@@ -33,7 +32,7 @@ import { PackageVersion } from "./package_version";
  * @param config Configuration
  * @param skipAuth If enabled, auth is not applied to request
  */
-export async function invokeApiMethod(requestOptions: request.Options, config: Configuration, skipAuth?: boolean): Promise<request.RequestResponse> {
+export async function invokeApiMethod(requestOptions: RawAxiosRequestConfig, config: Configuration, skipAuth?: boolean): Promise<AxiosResponse> {
         return await invokeApiMethodInternal(requestOptions, config, skipAuth);
 }
 
@@ -64,14 +63,14 @@ export function addQueryParameterToUrl(url, queryParameters, parameterName, para
  * @param config Configuration
  * @param skipAuth If enabled, auth is not applied to request
  */
-async function invokeApiMethodInternal(requestOptions: request.Options, config: Configuration, skipAuth?: boolean): Promise<request.RequestResponse> {
-    if (config.debugging === true) {
-        requestDebug(request, (type, data) => {
-            const toLog = {};
-            toLog[type] = data;
-            console.log(JSON.stringify(toLog, undefined, 2));
-        });
-    }
+async function invokeApiMethodInternal(requestOptions: RawAxiosRequestConfig, config: Configuration, skipAuth?: boolean): Promise<AxiosResponse> {
+    // if (config.debugging === true) {
+    //     requestDebug(request, (type, data) => {
+    //         const toLog = {};
+    //         toLog[type] = data;
+    //         console.log(JSON.stringify(toLog, undefined, 2));
+    //     });
+    // }
 
     if (!requestOptions.headers) {
         requestOptions.headers = {};
@@ -85,36 +84,37 @@ async function invokeApiMethodInternal(requestOptions: request.Options, config: 
         await auth.applyToRequest(requestOptions, config);
     }
 
-    return new Promise<request.RequestResponse>((resolve, reject) => {
-        request(requestOptions, async (error, response) => {
-            if (error) {
-                reject(error);
+    return new Promise<AxiosResponse>((resolve, reject) => {
+        axios(requestOptions)
+        .then((response) => {
+            if (response.status >= 200 && response.status <= 299) {
+                resolve(response);
             } else {
-                if (response.statusCode >= 200 && response.statusCode <= 299) {
-                    resolve(response);
-                } else {
-                    try {
-                        let bodyContent = response.body;
-                        if (bodyContent instanceof Buffer) {
-                            bodyContent = JSON.parse(bodyContent.toString("utf8"));
-                        }
-                        if (bodyContent.error) {
-                            if (bodyContent.error.message) {
-                                reject({ message: bodyContent.error.message, code: bodyContent.error.code });
-                            } else {
-                                reject({ message: bodyContent.error, code: response.statusCode });
-                            }
-                        } else {
-                            if (bodyContent.message) {
-                                reject({ message: bodyContent.message, code: bodyContent.code });
-                            } else {
-                                reject({ message: bodyContent, code: response.statusCode });
-                            }                            
-                        }
-                    } catch (error) {
-                        reject({ message: "Error while parse server error: " + error });
-                    }
+                reject({ message: response.data, code: response.status });
+            }
+        })
+        .catch((error: any) => {
+            try {
+                const response = error.response;
+                let bodyContent = response.data;
+                if (bodyContent instanceof Buffer) {
+                    bodyContent = JSON.parse(bodyContent.toString("utf8"));
                 }
+                if (bodyContent.error) {
+                    if (bodyContent.error.message) {
+                        reject({ message: bodyContent.error.message, code: bodyContent.error.code });
+                    } else {
+                        reject({ message: bodyContent.error, code: response.status });
+                    }
+                } else {
+                    if (bodyContent.message) {
+                        reject({ message: bodyContent.message, code: bodyContent.code });
+                    } else {
+                        reject({ message: bodyContent, code: response.status });
+                    }                            
+                }
+            } catch (error) {
+                reject({ message: "Error while parse server error: " + error });
             }
         });
     });

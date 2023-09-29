@@ -132,7 +132,7 @@ export class Serializer {
     }
 
     private static findCorrectType(data: any, expectedType: string) {
-        if (data === undefined) {
+        if (data === undefined || data === null) {
             return expectedType;
         } else if (primitives.indexOf(expectedType.toLowerCase()) !== -1) {
             return expectedType;

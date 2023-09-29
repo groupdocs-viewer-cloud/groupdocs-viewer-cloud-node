@@ -25,6 +25,7 @@
 /**
  * Describes API error.
  */
+// tslint:disable: completed-docs
 export class ApiError {
 
     /**

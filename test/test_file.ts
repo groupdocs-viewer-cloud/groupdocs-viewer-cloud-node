@@ -128,7 +128,8 @@ export class TestFile {
     private constructor(fileName: string, folder: string, password?: string) {
         this.fileName = fileName;
         this.folder = folder;
-        this.password = password;
+        if(password != undefined)
+            this.password = password;
     }
 
     public static GetTestFiles() {
