@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2023 Aspose Pty Ltd
+* Copyright (c) 2003-2024 Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -1501,6 +1501,129 @@ export namespace PdfDocumentOptions {
     }
 }
 // tslint:enable:quotemark
+/**
+ * Contains the PDF optimization options to apply to the output PDF file.
+ */
+export class PdfOptimizationOptions {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "lineriaze",
+            baseName: "lineriaze",
+            type: "boolean",
+        },        
+        {
+            name: "removeAnnotations",
+            baseName: "removeAnnotations",
+            type: "boolean",
+        },        
+        {
+            name: "removeFormFields",
+            baseName: "removeFormFields",
+            type: "boolean",
+        },        
+        {
+            name: "convertToGrayScale",
+            baseName: "convertToGrayScale",
+            type: "boolean",
+        },        
+        {
+            name: "subsetFonts",
+            baseName: "subsetFonts",
+            type: "boolean",
+        },        
+        {
+            name: "compressImages",
+            baseName: "compressImages",
+            type: "boolean",
+        },        
+        {
+            name: "imageQuality",
+            baseName: "imageQuality",
+            type: "number",
+        },        
+        {
+            name: "resizeImages",
+            baseName: "resizeImages",
+            type: "boolean",
+        },        
+        {
+            name: "maxResolution",
+            baseName: "maxResolution",
+            type: "number",
+        },        
+        {
+            name: "optimizeSpreadsheets",
+            baseName: "optimizeSpreadsheets",
+            type: "boolean",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return PdfOptimizationOptions.attributeTypeMap;
+    }
+
+    /**
+     * Enables optimization the output PDF file for viewing online with a web browser. This optimization allows a browser to display the first pages of a PDF file when     you open the document, instead of waiting for the entire file to download.
+     */
+    public lineriaze: boolean;
+    
+    /**
+     * Enables removing annotation from the output PDF file.
+     */
+    public removeAnnotations: boolean;
+    
+    /**
+     * Enables removing form fields from a PDF file.
+     */
+    public removeFormFields: boolean;
+    
+    /**
+     * Enables converting the output PDF file to a grayscale.
+     */
+    public convertToGrayScale: boolean;
+    
+    /**
+     * Subsets fonts in the output PDF file. If the file uses embedded fonts, it contains all font data. GroupDocs.Viewer can subset embedded fonts to reduce the file size.
+     */
+    public subsetFonts: boolean;
+    
+    /**
+     * Enables compressing images in the output PDF file. Use this option to allow other compressing options: PdfOptimizationOptions.ImageQuality and PdfOptimizationOptions.MaxResolution.
+     */
+    public compressImages: boolean;
+    
+    /**
+     * Sets the image quality in the output PDF file (in percent). To change the image quality, first set the PdfOptimizationOptions.CompressImages property to true.
+     */
+    public imageQuality: number;
+    
+    /**
+     * Enables setting the maximum resolution in the output PDF file. To allow this option, set the GroupDocs.Viewer.Options.PdfOptimizationOptions.CompressImages property to true. This option allows setting the GroupDocs.Viewer.Options.PdfOptimizationOptions.MaxResolution property.
+     */
+    public resizeImages: boolean;
+    
+    /**
+     * Sets the maximum resolution in the output PDF file. To allow this option, set the GroupDocs.Viewer.Options.PdfOptimizationOptions.CompressImages and GroupDocs.Viewer.Options.PdfOptimizationOptions.MaxResolution properties to true. The default value is 300.
+     */
+    public maxResolution: number;
+    
+    /**
+     * Enables optimization of spreadsheets in the PDF files. This optimization allows to reduce the output file size by setting up border lines. Besides that, it removes the Arial and Times New Roman characters of 32-127 codes.
+     */
+    public optimizeSpreadsheets: boolean;
+    
+    public constructor(init?: Partial<PdfOptimizationOptions>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
 /**
  * Represents view information for PDF document
  */
@@ -3249,11 +3372,6 @@ export class PdfOptions extends RenderOptions {
      */
     public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            name: "jpgQuality",
-            baseName: "jpgQuality",
-            type: "number",
-        },        
-        {
             name: "documentOpenPassword",
             baseName: "documentOpenPassword",
             type: "string",
@@ -3267,6 +3385,11 @@ export class PdfOptions extends RenderOptions {
             name: "permissions",
             baseName: "permissions",
             type: "Array<string>",
+        },        
+        {
+            name: "pdfOptimizationOptions",
+            baseName: "pdfOptimizationOptions",
+            type: "PdfOptimizationOptions",
         },        
         {
             name: "imageMaxWidth",
@@ -3297,11 +3420,6 @@ export class PdfOptions extends RenderOptions {
     }
 
     /**
-     * The quality of the JPG images contained by output PDF document; Valid values are between 1 and 100; Default value is 90
-     */
-    public jpgQuality: number;
-    
-    /**
      * The password required to open the PDF document
      */
     public documentOpenPassword: string;
@@ -3315,6 +3433,11 @@ export class PdfOptions extends RenderOptions {
      * The array of PDF document permissions. Allowed values are: AllowAll, DenyPrinting, DenyModification, DenyDataExtraction, DenyAll Default value is AllowAll, if now permissions are set.
      */
     public permissions: Array<string>;
+    
+    /**
+     * Contains options for rendering documents into PDF format.
+     */
+    public pdfOptimizationOptions: PdfOptimizationOptions;
     
     /**
      * Max width of an output image in pixels. (When converting single image to HTML only)
@@ -3416,6 +3539,7 @@ const typeMap = {
             PageInfo,
             PageRotation,
             PdfDocumentOptions,
+            PdfOptimizationOptions,
             PdfViewInfo,
             ProjectManagementOptions,
             ProjectManagementViewInfo,
