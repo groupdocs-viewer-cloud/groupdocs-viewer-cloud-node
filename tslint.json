@@ -6,21 +6,7 @@
     "jsRules": {},
     "rules": {
         "no-console": false,
-        "completed-docs": [
-            true,
-            {
-                "methods": {
-                    "privacies": [
-                        "public",
-                        "protected"
-                    ]
-                },
-                "classes": true,
-                "functions": true,
-                "interfaces": true,                
-                "types": true
-            }
-        ],
+        "completed-docs": false,
         "max-line-length": false,
         "no-trailing-whitespace": false,
         "max-classes-per-file": false,

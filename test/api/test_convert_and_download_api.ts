@@ -22,7 +22,35 @@
 * SOFTWARE.
 */
 
-/**
- * Package version
- */
-export const PackageVersion: string = "24.3.0";
+import { expect } from "chai";
+import "mocha";
+
+import { ConvertAndDownloadRequest} from "../../src/model";
+
+import * as TestContext from "../test_context";
+import { TestFile } from "../test_file";
+
+describe("test_convert_and_download_api", () => {
+    
+    before(async () => {
+    });
+
+    afterEach(async function() {
+    });
+
+    describe("TestConvertAndDownload", () => {
+
+         it("TestConvertAndDownloadJpg", () => {  
+
+            const api = TestContext.getViewerApi();
+            var format = "jpg";
+            let filebuf = TestContext.getTestFileBuffer(TestFile.OnePageDocx);
+
+            var request = new ConvertAndDownloadRequest(format, filebuf);
+            return api.convertAndDownload(request)
+                .then((result) => {     
+                    expect(result.length).greaterThan(0);
+                });
+        });
+    });    
+});

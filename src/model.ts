@@ -22,6 +22,95 @@
 * SOFTWARE.
 */
 
+export class ApiError {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "code",
+            baseName: "code",
+            type: "string",
+        },        
+        {
+            name: "message",
+            baseName: "message",
+            type: "string",
+        },        
+        {
+            name: "description",
+            baseName: "description",
+            type: "string",
+        },        
+        {
+            name: "dateTime",
+            baseName: "dateTime",
+            type: "Date",
+        },        
+        {
+            name: "innerError",
+            baseName: "innerError",
+            type: "ApiError",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return ApiError.attributeTypeMap;
+    }
+
+    public code: string;
+    
+    public message: string;
+    
+    public description: string;
+    
+    public dateTime: Date;
+    
+    public innerError: ApiError;
+    
+    public constructor(init?: Partial<ApiError>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
+export class ApiErrorResponse {
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            name: "requestId",
+            baseName: "requestId",
+            type: "string",
+        },        
+        {
+            name: "error",
+            baseName: "error",
+            type: "ApiError",
+        }    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        return ApiErrorResponse.attributeTypeMap;
+    }
+
+    public requestId: string;
+    
+    public error: ApiError;
+    
+    public constructor(init?: Partial<ApiErrorResponse>) {
+        
+        Object.assign(this, init);
+    }        
+}
+
 /**
  * Provides options for rendering archive files
  */
@@ -1446,6 +1535,21 @@ export class PdfDocumentOptions {
             name: "renderTextAsImage",
             baseName: "renderTextAsImage",
             type: "boolean",
+        },        
+        {
+            name: "fixedLayout",
+            baseName: "fixedLayout",
+            type: "boolean",
+        },        
+        {
+            name: "wrapImagesInSvg",
+            baseName: "wrapImagesInSvg",
+            type: "boolean",
+        },        
+        {
+            name: "disableFontLicenseVerifications",
+            baseName: "disableFontLicenseVerifications",
+            type: "boolean",
         }    ];
 
     /**
@@ -1484,6 +1588,21 @@ export class PdfDocumentOptions {
      * When this option is set to true, the text is rendered as an image in the output HTML. Enable this option to make text unselectable or to fix characters rendering and make HTML look like PDF. The default value is false. This option is supported when rendering into HTML.
      */
     public renderTextAsImage: boolean;
+    
+    /**
+     * Enables rendering the PDF and EPUB documents to HTML with a fixed layout.
+     */
+    public fixedLayout: boolean;
+    
+    /**
+     * Enables wrapping each image in the output HTML document in SVG tag to improve the output quality.
+     */
+    public wrapImagesInSvg: boolean;
+    
+    /**
+     * Disables any license restrictions for all fonts in the current XPS/OXPS document.
+     */
+    public disableFontLicenseVerifications: boolean;
     
     public constructor(init?: Partial<PdfDocumentOptions>) {
         
@@ -3440,22 +3559,22 @@ export class PdfOptions extends RenderOptions {
     public pdfOptimizationOptions: PdfOptimizationOptions;
     
     /**
-     * Max width of an output image in pixels. (When converting single image to HTML only)
+     * Max width of an output image in pixels. (When converting single image to PDF only)
      */
     public imageMaxWidth: number;
     
     /**
-     * Max height of an output image in pixels. (When converting single image to HTML only)
+     * Max height of an output image in pixels. (When converting single image to PDF only)
      */
     public imageMaxHeight: number;
     
     /**
-     * The width of the output image in pixels. (When converting single image to HTML only)
+     * The width of the output image in pixels. (When converting single image to PDF only)
      */
     public imageWidth: number;
     
     /**
-     * The height of an output image in pixels. (When converting single image to HTML only)
+     * The height of an output image in pixels. (When converting single image to PDF only)
      */
     public imageHeight: number;
     
@@ -3511,6 +3630,8 @@ const enumsMap = {
 };
 
 const typeMap = {
+            ApiError,
+            ApiErrorResponse,
             ArchiveOptions,
             ArchiveViewInfo,
             AttachmentInfo,
@@ -3940,6 +4061,38 @@ export class StorageExistsRequest {
     
     public constructor(storageName: string) {        
         this.storageName = storageName;
+    }
+}
+
+/**
+ * Request model for ConvertAndDownload operation.
+ */
+export class ConvertAndDownloadRequest {
+    /**
+     * Requested conversion format: HTML, JPG, PNG or PDF
+     */
+    public format: string;
+
+    /**
+     * Input file to convert
+     */
+    public file: Buffer;
+
+    /**
+     * Pages range to render, like \"1,2\" or \"3-5,10\"
+     */
+    public pages: string;
+
+    /**
+     * Input document password
+     */
+    public password: string;
+    
+    public constructor(format: string, file: Buffer, pages?: string, password?: string) {        
+        this.format = format;
+        this.file = file;
+        this.pages = pages;
+        this.password = password;
     }
 }
 

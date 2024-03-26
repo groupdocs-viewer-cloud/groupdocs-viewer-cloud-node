@@ -787,6 +787,50 @@ export class ViewApi {
     }
 
     /**
+     * Converts input document file to format specified
+     * @param requestObj contains request parameters
+     */
+    public async convertAndDownload(requestObj: model.ConvertAndDownloadRequest): Promise<Buffer> {
+        if (requestObj === null || requestObj === undefined) {
+            throw new Error('Required parameter "requestObj" was null or undefined when calling convertAndDownload.');
+        }
+
+        let localVarPath = this.configuration.getServerUrl() + "/viewer/convertAndDownload";
+        const queryParameters: any = {};
+        const formParams = new FormData();
+
+        // verify required parameter 'requestObj.format' is not null or undefined
+        if (requestObj.format === null || requestObj.format === undefined) {
+            throw new Error('Required parameter "requestObj.format" was null or undefined when calling convertAndDownload.');
+        }
+
+        // verify required parameter 'requestObj.file' is not null or undefined
+        if (requestObj.file === null || requestObj.file === undefined) {
+            throw new Error('Required parameter "requestObj.file" was null or undefined when calling convertAndDownload.');
+        }
+        
+        localVarPath = addQueryParameterToUrl(localVarPath, queryParameters, "format", requestObj.format);
+        localVarPath = addQueryParameterToUrl(localVarPath, queryParameters, "pages", requestObj.pages);
+        localVarPath = addQueryParameterToUrl(localVarPath, queryParameters, "password", requestObj.password);
+        if (requestObj.file !== undefined) {
+            formParams.append("File", requestObj.file, { filename: "file.name" });
+        }
+
+        const requestOptions: axios.AxiosRequestConfig = {
+            method: "PUT",
+            params: queryParameters,
+            url: localVarPath,
+            responseType: "arraybuffer",
+            responseEncoding: null,
+            data: formParams,
+        };
+
+        const response = await invokeApiMethod(requestOptions, this.configuration);
+        const result =  Serializer.deserialize(response.data, "Buffer");
+        return Promise.resolve(result);
+    }
+
+    /**
      * Render document pages
      * @param requestObj contains request parameters
      */
