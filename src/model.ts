@@ -129,11 +129,6 @@ export class ArchiveOptions {
             name: "fileName",
             baseName: "fileName",
             type: "string",
-        },        
-        {
-            name: "itemsPerPage",
-            baseName: "itemsPerPage",
-            type: "number",
         }    ];
 
     /**
@@ -152,11 +147,6 @@ export class ArchiveOptions {
      * The filename to display in the header. By default the name of the source file is displayed.
      */
     public fileName: string;
-    
-    /**
-     * Number of records per page (for rendering to HTML only)             
-     */
-    public itemsPerPage: number;
     
     public constructor(init?: Partial<ArchiveOptions>) {
         

@@ -1,6 +1,6 @@
 {
   "name": "groupdocs-viewer-cloud",
-  "version": "24.8.0",
+  "version": "24.12.0",
   "description": "GroupDocs.Viewer Cloud SDK for Node.js",
   "homepage": "https://products.groupdocs.cloud/viewer",
   "author": {
@@ -31,7 +31,7 @@
     "build:package": "npm pack"
   },
   "dependencies": {
-    "axios": "1.6.7",
+    "axios": "1.7.5",
     "form-data": "*",
     "jsonwebtoken": "9.0.1",
     "qs": "6.11.2"
