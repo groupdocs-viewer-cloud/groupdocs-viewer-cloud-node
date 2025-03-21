@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2024 Aspose Pty Ltd
+* Copyright (c) Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -2996,6 +2996,26 @@ export class WordProcessingOptions {
             name: "bottomMargin",
             baseName: "bottomMargin",
             type: "number",
+        },        
+        {
+            name: "pageSize",
+            baseName: "pageSize",
+            type: "WordProcessingOptions.PageSizeEnum",
+        },        
+        {
+            name: "enableOpenTypeFeatures",
+            baseName: "enableOpenTypeFeatures",
+            type: "boolean",
+        },        
+        {
+            name: "unlinkTableOfContents",
+            baseName: "unlinkTableOfContents",
+            type: "boolean",
+        },        
+        {
+            name: "updateFields",
+            baseName: "updateFields",
+            type: "boolean",
         }    ];
 
     /**
@@ -3030,12 +3050,47 @@ export class WordProcessingOptions {
      */
     public bottomMargin: number;
     
+    /**
+     * The size of the page.
+     */
+    public pageSize: WordProcessingOptions.PageSizeEnum;
+    
+    /**
+     * This option enables kerning and other OpenType Features when rendering Arabic, Hebrew, Indian Latin-based, or Cyrillic-based scripts.
+     */
+    public enableOpenTypeFeatures: boolean;
+    
+    /**
+     * When rendering to HTML or PDF, you can set this option to `true` to disable navigation from the table of contents. For HTML rendering, `a` tags with relative links will be replaced with `span` tags, removing functionality but preserving visual appearance. For PDF rendering, the table of contents will be rendered as plain text without links to document sections.             
+     */
+    public unlinkTableOfContents: boolean;
+    
+    /**
+     * Determines if fields of certain types should be updated before saving the input WordProcessing document to the HTML, PDF, PNG, or JPEG output formats. Default value for this property is true — fields will be updated before saving.             
+     */
+    public updateFields: boolean;
+    
     public constructor(init?: Partial<WordProcessingOptions>) {
         
         Object.assign(this, init);
     }        
 }
 
+// tslint:disable:quotemark
+// tslint:disable-next-line:no-namespace
+export namespace WordProcessingOptions {
+    export enum PageSizeEnum {
+        Unspecified = 'Unspecified' as any,
+        Letter = 'Letter' as any,
+        Ledger = 'Ledger' as any,
+        A0 = 'A0' as any,
+        A1 = 'A1' as any,
+        A2 = 'A2' as any,
+        A3 = 'A3' as any,
+        A4 = 'A4' as any,
+    }
+}
+// tslint:enable:quotemark
 /**
  * Attachment
  */
@@ -3204,6 +3259,11 @@ export class HtmlOptions extends RenderOptions {
             name: "renderToSinglePage",
             baseName: "renderToSinglePage",
             type: "boolean",
+        },        
+        {
+            name: "removeJavaScript",
+            baseName: "removeJavaScript",
+            type: "boolean",
         }    ];
 
     /**
@@ -3272,6 +3332,11 @@ export class HtmlOptions extends RenderOptions {
      * Enables HTML content will be rendered to single page
      */
     public renderToSinglePage: boolean;
+    
+    /**
+     * Allows to remove the JavaScript source code from the links in resultant HTML documents, when rendering input documents, which have the scripts. By default is enabled (true).             
+     */
+    public removeJavaScript: boolean;
     
     public constructor(init?: Partial<HtmlOptions>) {
         super(init);
@@ -3617,6 +3682,7 @@ const enumsMap = {
     "ViewOptions.ViewFormatEnum": ViewOptions.ViewFormatEnum,
     "Watermark.PositionEnum": Watermark.PositionEnum,
     "WebDocumentOptions.PageSizeEnum": WebDocumentOptions.PageSizeEnum,
+    "WordProcessingOptions.PageSizeEnum": WordProcessingOptions.PageSizeEnum,
 };
 
 const typeMap = {

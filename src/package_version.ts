@@ -1,7 +1,7 @@
 /*
 * The MIT License (MIT)
 *
-* Copyright (c) 2003-2024 Aspose Pty Ltd
+* Copyright (c) Aspose Pty Ltd
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -25,4 +25,4 @@
 /**
  * Package version
  */
-export const PackageVersion: string = "24.12.0";
+export const PackageVersion: string = "25.3.0";
